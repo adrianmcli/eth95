@@ -15,10 +15,15 @@
     "chalk": "^4.0.0",
     "clear": "^0.1.0",
     "commander": "^5.1.0",
-    "figlet": "^1.4.0"
+    "express": "^4.17.1",
+    "figlet": "^1.4.0",
+    "parcel-bundler": "^1.12.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@types/node": "^14.0.1",
+    "@types/react": "^16.9.35",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.2"
