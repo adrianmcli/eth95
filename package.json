@@ -1,8 +1,16 @@
 {
-  "name": "pilot",
+  "name": "@studydefi/pilot",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": {
+    "pilot": "./lib/index.js"
+  },
   "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc -p .",
+    "refresh": "rm -rf ./node_modules ./yarn.lock && npm install"
+  },
   "dependencies": {
     "chalk": "^4.0.0",
     "clear": "^0.1.0",
