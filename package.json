@@ -1,9 +1,8 @@
 {
-  "name": "@studydefi/ethpilot",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "ethpilot",
+  "version": "0.0.1",
   "bin": {
-    "pilot": "./lib/index.js"
+    "pilot": "./dist/index.js"
   },
   "license": "MIT",
   "scripts": {
