@@ -4,7 +4,7 @@ import WebSocket from "ws";
 
 import clientMiddleware from "./client";
 
-const startServer = async () => {
+const startServer = async ({ port }) => {
   const app: express.Application = express();
 
   app.use("/api", function (req, res, next) {
@@ -13,8 +13,6 @@ const startServer = async () => {
   });
 
   app.use("/", clientMiddleware());
-
-  const port = 3000;
 
   // Do Websocket stuff
   const server = http.createServer(app);
@@ -29,6 +27,7 @@ const startServer = async () => {
   wss.on("connection", function (ws, request) {
     ws.on("message", function (message) {
       console.log(`Received message from client: ${message}`);
+      ws.send('gotcha');
     });
     ws.on("close", function () {
       console.log("Websocket connection closed.");
