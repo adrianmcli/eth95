@@ -22,7 +22,7 @@ export const ModalHeader = ({ onCloseClick, label }) => (
       square
       onClick={onCloseClick}
     >
-      <Ex>x</Ex>
+      <Ex>✕</Ex>
     </Button>
   </Header>
 );

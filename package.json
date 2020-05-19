@@ -17,6 +17,7 @@
     "chokidar": "^3.4.0",
     "clear": "^0.1.0",
     "commander": "^5.1.0",
+    "ethers": "^4.0.47",
     "express": "^4.17.1",
     "figlet": "^1.4.0",
     "parcel-bundler": "^1.12.4",

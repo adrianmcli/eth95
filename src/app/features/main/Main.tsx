@@ -10,7 +10,7 @@ const Container = styled.div`
 `;
 
 const Content = styled(Fieldset)`
-  height: calc(100% - 10px);
+  height: calc(100% - 8px);
 `;
 
 const Main = () => {

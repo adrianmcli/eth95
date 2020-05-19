@@ -34,7 +34,7 @@ const AddContractBtn = () => {
 
   return (
     <div style={{ width: `100%` }}>
-      <Button style={{ marginBottom: "1rem" }} onClick={openModal} fullWidth>
+      <Button onClick={openModal} fullWidth>
         Add Contract
       </Button>
 
