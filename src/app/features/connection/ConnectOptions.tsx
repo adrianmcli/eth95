@@ -115,7 +115,10 @@ const ConnectOptions = () => {
         )}
       </Fieldset>
       <br />
-      <Fieldset label="Custom Signer (optional)">
+      <Fieldset
+        label="Custom Signer (optional)"
+        title="This will only be used if non-empty."
+      >
         <p>Private Key / Mnemonic:</p>
         <Input
           style={{ fontSize: `12px` }}

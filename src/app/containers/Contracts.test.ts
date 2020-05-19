@@ -44,11 +44,11 @@ describe("Contracts state container", () => {
 
     const testAbi = [{ type: "function", name: "increment" }];
 
-    act(() => result.current.addByAbi(testAbi, "Counter.sol"));
+    act(() => result.current.addByAbi(testAbi, "Counter"));
     expect(result.current.contracts).toStrictEqual([
       {
         abi: testAbi,
-        name: "Counter.sol",
+        name: "Counter",
       },
     ]);
   });
@@ -62,13 +62,13 @@ describe("Contracts state container", () => {
     };
 
     act(() =>
-      result.current.addByArtifact(testArtifact, "Counter.sol", "./test/path"),
+      result.current.addByArtifact(testArtifact, "Counter", "./test/path"),
     );
     expect(result.current.contracts).toStrictEqual([
       {
         abi: testArtifact.abi,
         artifact: testArtifact,
-        name: "Counter.sol",
+        name: "Counter",
         path: "./test/path",
       },
     ]);
@@ -85,7 +85,7 @@ describe("Contracts state container", () => {
       contractName: "Counter",
       abi: [{ type: "function", name: "decrement" }],
     };
-    const name = "Counter.sol";
+    const name = "Counter";
     const path = "./test/path";
 
     act(() => result.current.addByArtifact(oldArtifact, name, path));
@@ -115,7 +115,7 @@ describe("Contracts state container", () => {
       contractName: "Counter",
       abi: [{ type: "function", name: "increment" }],
     };
-    const name = "Counter.sol";
+    const name = "Counter";
     const path = "./test/path";
 
     act(() => result.current.addByArtifact(testArtifact, name, path));

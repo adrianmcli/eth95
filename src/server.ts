@@ -13,12 +13,6 @@ interface Input {
 const startServer = async ({ port, paths = [] }: Input) => {
   const app: express.Application = express();
 
-  // regular route
-  app.use("/api", function (req, res, next) {
-    console.log("/api route requested");
-    res.json({ ping: "pong" });
-  });
-
   // use middleware if in development, otherwise serve prod build
   if (process.env.ETHPILOT_DEV) {
     app.use("/", devClientMiddleware());
@@ -52,10 +46,10 @@ const startServer = async ({ port, paths = [] }: Input) => {
           ws.send(JSON.stringify(payload));
         });
       }
-      // ws.send("gotcha");
     });
+    
     ws.on("close", function () {
-      console.log("Websocket connection closed.");
+      // console.log("Websocket connection closed.");
     });
   });
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components"
 import Modal from "react-modal";
 import { Button } from "react95";
 
@@ -27,13 +28,19 @@ const customStyles = {
   },
 };
 
+const Container = styled.div`
+  width: calc(100% - 4px);
+  position: absolute;
+  bottom: 0;
+`
+
 const AddContractBtn = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div style={{ width: `100%` }}>
+    <Container>
       <Button onClick={openModal} fullWidth>
         Add Contract
       </Button>
@@ -46,7 +53,7 @@ const AddContractBtn = () => {
       >
         <AddContractModal closeModal={closeModal} />
       </Modal>
-    </div>
+    </Container>
   );
 };
 

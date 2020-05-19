@@ -12,12 +12,14 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 `;
 
 const ContractsSection = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  flex-grow: 1;
 `;
 
 const FilesCutout = styled(Cutout)`
@@ -36,6 +38,7 @@ const FilesContainer = styled.div`
   overflow: auto;
   width: 100%;
   height: 100%;
+  padding-bottom: 35px;
 `;
 
 const Sidebar = () => {
@@ -45,13 +48,14 @@ const Sidebar = () => {
       <ConnectOptions />
       <br />
       <ContractsSection label="Contracts">
-        <AddContractBtn />
+        <div>Contracts:</div>
         <br />
         <FilesCutout shadow={false}>
           <FilesContainer>
             {contracts.map((c, i) => (
               <ContractItem key={c.name} idx={i} name={c.name} />
             ))}
+            <AddContractBtn />
           </FilesContainer>
         </FilesCutout>
       </ContractsSection>

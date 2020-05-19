@@ -23,7 +23,7 @@ function useWebsockets() {
       if (data.type === "NEW_CONTRACT") {
         addByArtifact(
           data.artifact,
-          `${data.artifact.contractName}.sol`,
+          `${data.artifact.contractName}`,
           data.path,
         );
       }
@@ -31,7 +31,7 @@ function useWebsockets() {
         // change the specified contract by path
         updateByPath(
           data.artifact,
-          `${data.artifact.contractName}.sol`,
+          `${data.artifact.contractName}`,
           data.path,
         );
       }

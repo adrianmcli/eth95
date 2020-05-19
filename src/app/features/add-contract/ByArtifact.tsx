@@ -24,7 +24,7 @@ const ByAbi = ({ closeModal }) => {
     const rawArtifact = e.target.value;
     setRawArtifact(e.target.value);
     if (validateArtifact(rawArtifact)) {
-      setName(JSON.parse(rawArtifact).contractName + ".sol");
+      setName(JSON.parse(rawArtifact).contractName);
     }
   };
 
@@ -54,7 +54,7 @@ const ByAbi = ({ closeModal }) => {
           </p>
           <br />
           <TextField
-            placeholder="MyDapp.sol"
+            placeholder="MyDapp"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />

@@ -20,7 +20,7 @@ const generateName = () => {
   const name = words
     .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
     .join("");
-  return name + ".sol";
+  return name;
 };
 
 const ByAbi = ({ closeModal }) => {
@@ -57,7 +57,7 @@ const ByAbi = ({ closeModal }) => {
           </p>
           <br />
           <TextField
-            placeholder="MyDapp.sol"
+            placeholder="MyDapp"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
