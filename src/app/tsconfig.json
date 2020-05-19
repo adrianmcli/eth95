@@ -2,16 +2,14 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": ["es6", "es2015"],
-    "outDir": "dist",
-    "rootDir": "src",
-    "strict": true,
+    "lib": ["es6", "es2015", "dom"],
+    "noEmit": true,
+    "strict": false,
     "types": ["node"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react"
   },
-  "exclude": ["./src/app"],
-  "include": ["./src"]
+  "include": ["./**/*.ts", "./**/*.tsx"]
 }

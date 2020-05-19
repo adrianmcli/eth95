@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "build": "tsc -p . && cp src/app/index.prod.html dist/app/index.html",
-    "refresh": "rm -rf ./node_modules ./yarn.lock && npm install"
+    "build": "rm -rf dist && yarn build:tsc && yarn build:parcel",
+    "build:tsc": "tsc -p . && tsc -p ./src/app",
+    "build:parcel": "parcel build src/app/index.html -d dist/app"
   },
   "dependencies": {
     "chalk": "^4.0.0",
@@ -20,6 +21,8 @@
     "parcel-bundler": "^1.12.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react95": "^2.0.0",
+    "styled-components": "^5.1.0",
     "ws": "^7.3.0"
   },
   "devDependencies": {
@@ -27,6 +30,7 @@
     "@types/express": "^4.17.6",
     "@types/figlet": "^1.2.0",
     "@types/node": "^14.0.1",
+    "@types/parcel-bundler": "^1.12.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/ws": "^7.2.4",

@@ -2,19 +2,25 @@ import express from "express";
 import http from "http";
 import WebSocket from "ws";
 
-import clientMiddleware from "./client";
+import devClientMiddleware from "./dev-client";
 
-const startServer = async ({ port }) => {
+const startServer = async ({ port }: { port: number }) => {
   const app: express.Application = express();
 
+  // regular route
   app.use("/api", function (req, res, next) {
     console.log("/api route requested");
     res.json({ ping: "pong" });
   });
 
-  app.use("/", clientMiddleware());
+  // use middleware if in development, otherwise serve prod build
+  if (process.env.ETHPILOT_DEV) {
+    app.use("/", devClientMiddleware());
+  } else {
+    app.use("/", express.static(__dirname + "/app"));
+  }
 
-  // Do Websocket stuff
+  // setup websocket stuff
   const server = http.createServer(app);
   const wss = new WebSocket.Server({ clientTracking: false, noServer: true });
 
@@ -27,7 +33,7 @@ const startServer = async ({ port }) => {
   wss.on("connection", function (ws, request) {
     ws.on("message", function (message) {
       console.log(`Received message from client: ${message}`);
-      ws.send('gotcha');
+      ws.send("gotcha");
     });
     ws.on("close", function () {
       console.log("Websocket connection closed.");
