@@ -1,59 +1,20 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import {
-  Button,
-  Window,
-  WindowHeader,
-  WindowContent,
-  Tabs,
-  Tab,
-} from "react95";
+import { Tabs, Tab } from "react95";
+
+import { ModalContainer, ModalHeader, ModalContent } from "../common/Modal";
 
 import ByAbi from "./ByAbi";
 import ByArtifact from "./ByArtifact";
 import ByEtherscan from "./ByEtherscan";
-
-const Container = styled(Window)`
-  width: 720px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Content = styled(WindowContent)`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;]
-`;
-
-const Header = styled(WindowHeader)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Ex = styled.span`
-  font-weight: bold;
-  transform: translate(-0.25px, -1px);
-`;
 
 const AddContractBtn = ({ closeModal }) => {
   const [activeTab, setActiveTab] = useState(0);
   const handleTabChange = (_, value) => setActiveTab(value);
 
   return (
-    <Container>
-      <Header>
-        <span>Add Contract</span>
-        <Button
-          style={{ width: "24px", height: "24px" }}
-          size={"sm"}
-          square
-          onClick={closeModal}
-        >
-          <Ex>x</Ex>
-        </Button>
-      </Header>
-      <Content>
+    <ModalContainer>
+      <ModalHeader onCloseClick={closeModal} label="Add Contract" />
+      <ModalContent>
         <Tabs value={activeTab} onChange={handleTabChange}>
           <Tab value={0}>ABI</Tab>
           <Tab value={1}>JSON Artifact</Tab>
@@ -64,8 +25,8 @@ const AddContractBtn = ({ closeModal }) => {
           {activeTab === 1 && <ByArtifact closeModal={closeModal} />}
           {activeTab === 2 && <ByEtherscan closeModal={closeModal} />}
         </div>
-      </Content>
-    </Container>
+      </ModalContent>
+    </ModalContainer>
   );
 };
 

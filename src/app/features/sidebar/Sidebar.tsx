@@ -4,6 +4,7 @@ import { Cutout, Button } from "react95";
 
 import AddContractBtn from "../add-contract/AddContractBtn";
 import Contracts from "../../containers/Contracts";
+import ContractItem from "./ContractItem";
 
 const Container = styled.div`
   width: 300px;
@@ -35,8 +36,8 @@ const Sidebar = () => {
       <AddContractBtn />
       <FilesCutout shadow={false}>
         <FilesContainer>
-          {contracts.map((c) => (
-            <div key={c.name}>{c.name}</div>
+          {contracts.map((c, i) => (
+            <ContractItem key={c.name} idx={i} name={c.name} />
           ))}
         </FilesContainer>
       </FilesCutout>

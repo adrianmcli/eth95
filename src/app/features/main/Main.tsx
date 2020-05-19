@@ -14,10 +14,11 @@ const Content = styled(Fieldset)`
 `;
 
 const Main = () => {
-  const { contracts } = Contracts.useContainer();
+  const { selectedContract: contract } = Contracts.useContainer();
+
   return (
     <Container>
-      <Content label="MyDapp.sol"></Content>
+      <Content label={contract && contract.name}></Content>
     </Container>
   );
 };
