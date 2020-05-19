@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, TabBody as rTabBody, TextField, Fieldset } from "react95";
-import validateArtifact from "./validateArtifact";
+import validateArtifact from "../../../common/validateArtifact";
 import Contracts from "../../containers/Contracts";
 
 const TabBody = styled(rTabBody)`

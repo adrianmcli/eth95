@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, TabBody as rTabBody, TextField, Fieldset } from "react95";
 import randomWords from "random-words";
-import validateAbi from "./validateAbi";
+import validateAbi from "../../../common/validateAbi";
 import Contracts from "../../containers/Contracts";
 
 const TabBody = styled(rTabBody)`
