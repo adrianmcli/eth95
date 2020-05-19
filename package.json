@@ -19,10 +19,13 @@
     "express": "^4.17.1",
     "figlet": "^1.4.0",
     "parcel-bundler": "^1.12.4",
+    "random-words": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react95": "^2.0.0",
+    "react-modal": "^3.11.2",
+    "react95": "^3.0.0-beta.22",
     "styled-components": "^5.1.0",
+    "unstated-next": "^1.1.0",
     "ws": "^7.3.0"
   },
   "devDependencies": {
@@ -35,6 +38,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/ws": "^7.2.4",
     "nodemon": "^2.0.4",
+    "parcel-plugin-bundle-visualiser": "^1.2.0",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.2"
   }
