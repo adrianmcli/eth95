@@ -1,5 +1,5 @@
 import { createContainer } from "unstated-next";
-import { useState, useEffect, useReducer } from "react";
+import { useState } from "react";
 
 interface Contract {
   abi: any[];
