@@ -5,7 +5,7 @@
     "lib": ["es6", "es2015", "dom"],
     "noEmit": true,
     "strict": false,
-    "types": ["node"],
+    "types": ["node", "jest"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,

@@ -28,7 +28,7 @@ const FilesContainer = styled.div`
   height: calc(100% - 4px);
 `;
 
-const App = () => {
+const Sidebar = () => {
   const { contracts } = Contracts.useContainer();
   return (
     <Container>
@@ -44,4 +44,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Sidebar;

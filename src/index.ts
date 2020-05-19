@@ -27,10 +27,8 @@ commander
   .parse(process.argv);
 
 // print out help text
-if (!process.argv.slice(2).length) {
-  commander.outputHelp();
-  console.log("");
-}
+commander.outputHelp();
+console.log("");
 
 const main = async () => {
   let paths;

@@ -6,6 +6,7 @@ import Contracts from "./containers/Contracts";
 import Websockets from "./containers/Websockets";
 import Layout from "./features/common/Layout";
 import Sidebar from "./features/sidebar/Sidebar";
+import Main from "./features/main/Main";
 
 Modal.setAppElement("#root");
 
@@ -14,7 +15,7 @@ const App = () => (
     <Websockets.Provider>
       <Layout>
         <Sidebar />
-        {/* <Divider /> */}
+        <Main />
       </Layout>
     </Websockets.Provider>
   </Contracts.Provider>

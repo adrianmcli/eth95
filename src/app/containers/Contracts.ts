@@ -2,33 +2,26 @@ import { createContainer } from "unstated-next";
 import { useState, useEffect, useReducer } from "react";
 
 interface Contract {
-  abi: any;
+  abi: any[];
   name: string;
   artifact?: any;
   address?: string;
   path?: string;
 }
 
-function useContracts() {
+export function useContracts() {
   const [contracts, setContracts] = useState<Contract[]>([]);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const selectedContract = selectedIdx === null ? null : contracts[selectedIdx];
 
   const addContract = (contract: Contract) =>
-    setContracts((prevState) => [...prevState, contract]);
-  const removeContract = (idx) => {
-    const newContracts = contracts.filter((x, i) => idx !== i);
-    setContracts(newContracts);
+    setContracts((prevContracts) => [...prevContracts, contract]);
+
+  const removeContract = (idx: number) => {
+    setContracts((prevContracts) => prevContracts.filter((x, i) => idx !== i));
   };
 
-  const renameContract = (name, idx) => {
-    contracts.map((c, i) => {
-      if (i === idx) {
-        c.name = name;
-      }
-      return c;
-    });
-  };
-
-  const addByAbi = (abi, name) => {
+  const addByAbi = (abi: any[], name: string) => {
     addContract({
       name,
       abi,
@@ -44,7 +37,16 @@ function useContracts() {
     });
   };
 
-  return { contracts, addContract, removeContract, addByAbi, addByArtifact };
+  return {
+    contracts,
+    addContract,
+    removeContract,
+    addByAbi,
+    addByArtifact,
+    selectedIdx,
+    selectedContract,
+    setSelectedIdx,
+  };
 }
 
 export default createContainer(useContracts);
