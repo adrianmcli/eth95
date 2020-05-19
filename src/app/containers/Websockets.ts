@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import Contracts from "./Contracts";
 
 function useWebsockets() {
-  const { addByArtifact } = Contracts.useContainer();
+  const {
+    addByArtifact,
+    updateByPath,
+    removeByPath,
+  } = Contracts.useContainer();
   const [socket, setSocket] = useState(null);
 
   const setup = () => {
@@ -17,7 +21,23 @@ function useWebsockets() {
     ws.addEventListener("message", function (event) {
       const data = JSON.parse(event.data);
       if (data.type === "NEW_CONTRACT") {
-        addByArtifact(data.artifact, `${data.artifact.contractName}.sol`, data.path);
+        addByArtifact(
+          data.artifact,
+          `${data.artifact.contractName}.sol`,
+          data.path,
+        );
+      }
+      if (data.type === "CONTRACT_CHANGED") {
+        // change the specified contract by path
+        updateByPath(
+          data.artifact,
+          `${data.artifact.contractName}.sol`,
+          data.path,
+        );
+      }
+      if (data.type === "CONTRACT_DELETED") {
+        // remove the specified contract by path
+        removeByPath(data.path);
       }
     });
 

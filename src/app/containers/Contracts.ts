@@ -15,9 +15,13 @@ export function useContracts() {
   const selectedContract = selectedIdx === null ? null : contracts[selectedIdx];
 
   const addContract = (contract: Contract) =>
-    setContracts((prevContracts) => [...prevContracts, contract]);
+    setContracts((prevContracts) => {
+      const newContracts = [...prevContracts, contract];
+      return newContracts.sort((a, b) => a.name.localeCompare(b.name));
+    });
 
-  const removeContract = (idx: number) => {
+  const removeContractByIdx = (idx: number) => {
+    setSelectedIdx(null);
     setContracts((prevContracts) => prevContracts.filter((x, i) => idx !== i));
   };
 
@@ -37,12 +41,31 @@ export function useContracts() {
     });
   };
 
+  const updateByPath = (artifact: any, name: string, path: string) => {
+    setContracts((prevContracts) =>
+      prevContracts.map((c) => {
+        if (c.path === path) {
+          (c.abi = artifact.abi), (c.artifact = artifact);
+        }
+        return c;
+      }),
+    );
+  };
+
+  const removeByPath = (path: string) => {
+    setContracts((prevContracts) =>
+      prevContracts.filter((c) => c.path !== path),
+    );
+  };
+
   return {
     contracts,
     addContract,
-    removeContract,
+    removeContractByIdx,
     addByAbi,
     addByArtifact,
+    updateByPath,
+    removeByPath,
     selectedIdx,
     selectedContract,
     setSelectedIdx,
