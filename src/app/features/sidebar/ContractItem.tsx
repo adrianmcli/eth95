@@ -8,7 +8,7 @@ const Item = styled.div`
   background: ${(p) => (p.isActive ? "#050289" : "unset")};
   border: ${(p) => (p.isActive ? "1px dotted" : "unset")};
   cursor: default;
-  padding: 2px;
+  padding: 2px 4px;
 `;
 
 const ContractItem = ({ name, idx }) => {

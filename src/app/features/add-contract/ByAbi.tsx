@@ -76,7 +76,7 @@ const ByAbi = ({ closeModal }) => {
             size="lg"
             style={{ marginTop: "1rem" }}
             onClick={addContract}
-            disabled={!isAbiValid && name.trim() !== ""}
+            disabled={!isAbiValid || name.trim() === ""}
           >
             Add Contract by ABI
           </Button>

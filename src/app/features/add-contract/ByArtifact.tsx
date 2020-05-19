@@ -73,7 +73,7 @@ const ByAbi = ({ closeModal }) => {
             size="lg"
             style={{ marginTop: "1rem" }}
             onClick={addContract}
-            disabled={!isArtifactValid && name.trim() !== ""}
+            disabled={!isArtifactValid || name.trim() === ""}
           >
             Add Contract by Artifact
           </Button>
