@@ -1,10 +1,16 @@
 import express from "express";
 import http from "http";
+import fs from "fs";
 import WebSocket from "ws";
 
 import devClientMiddleware from "./dev-client";
 
-const startServer = async ({ port }: { port: number }) => {
+interface Input {
+  port: number;
+  paths?: string[];
+}
+
+const startServer = async ({ port, paths = [] }: Input) => {
   const app: express.Application = express();
 
   // regular route
@@ -32,8 +38,21 @@ const startServer = async ({ port }: { port: number }) => {
 
   wss.on("connection", function (ws, request) {
     ws.on("message", function (message) {
-      console.log(`Received message from client: ${message}`);
-      ws.send("gotcha");
+      // console.log(`Received message from client: ${message}`);
+      if (message === "CONNECTION_OPENED" && paths.length > 0) {
+        // loop through files and send its contents
+        paths.forEach((path) => {
+          const rawJson = fs.readFileSync(path);
+          const artifact = JSON.parse(rawJson.toString());
+          const payload = {
+            type: "NEW_CONTRACT",
+            artifact,
+            path,
+          };
+          ws.send(JSON.stringify(payload));
+        });
+      }
+      // ws.send("gotcha");
     });
     ws.on("close", function () {
       console.log("Websocket connection closed.");

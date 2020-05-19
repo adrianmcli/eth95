@@ -28,13 +28,13 @@ const customStyles = {
 };
 
 const AddContractBtn = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <>
-      <Button style={{ marginBottom: "1rem" }} onClick={openModal}>
+    <div style={{ width: `100%` }}>
+      <Button style={{ marginBottom: "1rem" }} onClick={openModal} fullWidth>
         Add Contract
       </Button>
 
@@ -46,7 +46,7 @@ const AddContractBtn = () => {
       >
         <AddContractModal closeModal={closeModal} />
       </Modal>
-    </>
+    </div>
   );
 };
 

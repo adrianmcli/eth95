@@ -6,13 +6,14 @@ interface Contract {
   name: string;
   artifact?: any;
   address?: string;
+  path?: string;
 }
 
 function useContracts() {
   const [contracts, setContracts] = useState<Contract[]>([]);
 
   const addContract = (contract: Contract) =>
-    setContracts([...contracts, contract]);
+    setContracts((prevState) => [...prevState, contract]);
   const removeContract = (idx) => {
     const newContracts = contracts.filter((x, i) => idx !== i);
     setContracts(newContracts);
@@ -34,11 +35,12 @@ function useContracts() {
     });
   };
 
-  const addByArtifact = (artifact, name) => {
+  const addByArtifact = (artifact: any, name: string, path?: string) => {
     addContract({
       name,
       abi: artifact.abi,
       artifact,
+      path,
     });
   };
 

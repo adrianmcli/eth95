@@ -17,6 +17,7 @@ const Container = styled(Window)`
 const Content = styled(WindowContent)`
   flex-grow: 1;
   display: flex;
+  overflow: auto;
 `;
 
 const appTheme = {

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import Modal from "react-modal";
 import { Cutout, Button } from "react95";
 
 import AddContractBtn from "../add-contract/AddContractBtn";
@@ -13,8 +12,9 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const FilesContainer = styled(Cutout)`
+const FilesCutout = styled(Cutout)`
   flex-grow: 1;
+  overflow: auto;
   background: white;
 
   &:before {
@@ -22,16 +22,24 @@ const FilesContainer = styled(Cutout)`
   }
 `;
 
+const FilesContainer = styled.div`
+  overflow: auto;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+`;
+
 const App = () => {
   const { contracts } = Contracts.useContainer();
   return (
     <Container>
       <AddContractBtn />
-      <FilesContainer>
-        {contracts.map((c) => (
-          <div key={c.name}>{c.name}</div>
-        ))}
-      </FilesContainer>
+      <FilesCutout shadow={false}>
+        <FilesContainer>
+          {contracts.map((c) => (
+            <div key={c.name}>{c.name}</div>
+          ))}
+        </FilesContainer>
+      </FilesCutout>
     </Container>
   );
 };

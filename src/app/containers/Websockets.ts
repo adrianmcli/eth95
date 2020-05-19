@@ -10,12 +10,15 @@ function useWebsockets() {
     const ws = new WebSocket(`ws://${window.location.host}`);
     // Connection opened
     ws.addEventListener("open", function (event) {
-      ws.send("Connection opened!");
+      ws.send("CONNECTION_OPENED");
     });
 
     // Listen for messages
     ws.addEventListener("message", function (event) {
-      console.log("Message from server ", event.data);
+      const data = JSON.parse(event.data);
+      if (data.type === "NEW_CONTRACT") {
+        addByArtifact(data.artifact, `${data.artifact.contractName}.sol`, data.path);
+      }
     });
 
     setSocket(ws);
