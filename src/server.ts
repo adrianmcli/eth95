@@ -4,6 +4,7 @@ import fs from "fs";
 import WebSocket from "ws";
 
 import devClientMiddleware from "./dev-client";
+import validateRawArtifact from "./common/validateRawArtifact";
 
 interface Input {
   port: number;
@@ -37,17 +38,19 @@ const startServer = async ({ port, paths = [] }: Input) => {
         // loop through files and send its contents
         paths.forEach((path) => {
           const rawJson = fs.readFileSync(path);
-          const artifact = JSON.parse(rawJson.toString());
-          const payload = {
-            type: "NEW_CONTRACT",
-            artifact,
-            path,
-          };
-          ws.send(JSON.stringify(payload));
+          if (validateRawArtifact(rawJson)) {
+            const artifact = JSON.parse(rawJson.toString());
+            const payload = {
+              type: "NEW_CONTRACT",
+              artifact,
+              path,
+            };
+            ws.send(JSON.stringify(payload));
+          }
         });
       }
     });
-    
+
     ws.on("close", function () {
       // console.log("Websocket connection closed.");
     });

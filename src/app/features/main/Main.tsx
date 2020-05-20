@@ -1,77 +1,45 @@
 import React from "react";
 import styled from "styled-components";
-import { Fieldset, Cutout } from "react95";
+import { Fieldset, Cutout, Divider } from "react95";
 
 import Contracts from "../../containers/Contracts";
+import FunctionInfo from "../function-info/FunctionInfo";
 
 const Container = styled.div`
   flex-grow: 1;
   margin-left: 1rem;
 `;
 
-const Content = styled(Fieldset)`
+const ContentFrame = styled(Fieldset)`
   height: calc(100% - 8px);
 `;
 
-const FunctionsCutout = styled(Cutout)`
-  flex-grow: 1;
-  background: white;
-  overflow: hidden;
-
-  &:before {
-    z-index: unset;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const FunctionsContainer = styled.div`
-  overflow: auto;
-  width: 100%;
+const Content = styled.div`
   height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 50% 50%;
 `;
 
 const Main = () => {
   const { selectedContract: contract } = Contracts.useContainer();
-  // console.log(contract);
   if (!contract) {
     return (
       <Container>
-        <Content label={contract && contract.name}>
+        <ContentFrame label={contract && contract.name}>
           <div>Please select a contract.</div>
-        </Content>
+        </ContentFrame>
       </Container>
     );
   }
-  console.log(contract.abi);
   return (
     <Container>
-      <Content label={contract && contract.name}>
-        <div style={{ fontSize: "12px" }}>
-          <strong>Path:</strong> {contract.path || "N/A"}
-        </div>
-        <FunctionsCutout>
-          <FunctionsContainer>
-            {contract.abi
-              .filter((x) => x.type === "function")
-              .map((fn, i) => {
-                const { name, inputs } = fn;
-                if (inputs.length === 0) {
-                  return <div key={i}>{`${name}()`}</div>;
-                }
-                const titleTxt = inputs
-                  .map((x) => `${x.type} ${x.name}`)
-                  .join(", ");
-                return (
-                  <div
-                    key={i}
-                    title={titleTxt}
-                  >{`${name}(${inputs.length})`}</div>
-                );
-              })}
-          </FunctionsContainer>
-        </FunctionsCutout>
-      </Content>
+      <ContentFrame label={contract && contract.name}>
+        <Content>
+          <div>Exciting stuff will come here soon.</div>
+          <FunctionInfo contract={contract} />
+        </Content>
+      </ContentFrame>
     </Container>
   );
 };

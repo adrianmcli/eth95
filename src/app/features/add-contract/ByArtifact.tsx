@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, TabBody as rTabBody, TextField, Fieldset } from "react95";
-import validateArtifact from "../../../common/validateArtifact";
+import validateRawArtifact from "../../../common/validateRawArtifact";
 import Contracts from "../../containers/Contracts";
 
 const TabBody = styled(rTabBody)`
@@ -18,12 +18,12 @@ const ByAbi = ({ closeModal }) => {
   const { addByArtifact } = Contracts.useContainer();
   const [rawArtifact, setRawArtifact] = useState("");
   const [name, setName] = useState("");
-  const isArtifactValid = validateArtifact(rawArtifact);
+  const isArtifactValid = validateRawArtifact(rawArtifact);
 
   const handleTextAreaChange = (e) => {
     const rawArtifact = e.target.value;
     setRawArtifact(e.target.value);
-    if (validateArtifact(rawArtifact)) {
+    if (validateRawArtifact(rawArtifact)) {
       setName(JSON.parse(rawArtifact).contractName);
     }
   };

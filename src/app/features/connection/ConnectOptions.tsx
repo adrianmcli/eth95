@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Select, Fieldset, Button, TextField } from "react95";
 import Connection, { options, Method } from "../../containers/Connection";
+import Input from "../common/Input";
+import CustomSigner from "./CustomSigner";
 
 const ConnectionSelector = styled(Select)`
   font-size: 14px;
@@ -16,28 +18,29 @@ const ConnectionSelector = styled(Select)`
   }
 `;
 
-const Input = styled(TextField)`
-  &:before {
-    width: 100%;
-    height: 100%;
-    z-index: unset;
-  }
-  & > input {
-    font-size: 14px;
-  }
+const AddressContainer = styled.span`
+  float: right;
+  text-align: left;
+  font-size: 12px;
+  max-width: 172px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 3px;
 `;
 
 const ConnectOptions = () => {
   const {
     connection,
     setConnection,
-    customSigner,
-    setCustomSigner,
     provider,
     signer,
+    customSigner,
     connectMetaMask,
     connectCustom,
     reset,
+    resetCustomSigner,
+    address,
   } = Connection.useContainer();
 
   const [nodeUrl, setNodeUrl] = useState("");
@@ -83,12 +86,34 @@ const ConnectOptions = () => {
           </span>
         </div>
 
+        {address !== null && (
+          <div>
+            Address:
+            <AddressContainer title={address}>{address}</AddressContainer>
+          </div>
+        )}
+
+        {customSigner && (
+          <Button
+            style={{ marginTop: "12px" }}
+            fullWidth
+            onClick={() => {
+              resetCustomSigner();
+            }}
+          >
+            Reset Custom Signer
+          </Button>
+        )}
+
         {connection === Method.MetaMask && (
           <>
             {!provider && (
               <>
-                <br />
-                <Button fullWidth onClick={connectMetaMask}>
+                <Button
+                  style={{ marginTop: "12px" }}
+                  fullWidth
+                  onClick={connectMetaMask}
+                >
                   Connect
                 </Button>
               </>
@@ -98,8 +123,7 @@ const ConnectOptions = () => {
 
         {connection === Method.Custom && (
           <>
-            <br />
-            <p>Node URL:</p>
+            <p style={{ marginTop: "12px" }}>Node URL:</p>
             <Input
               value={nodeUrl}
               onChange={(e) => setNodeUrl(e.target.value)}
@@ -124,19 +148,7 @@ const ConnectOptions = () => {
           </>
         )}
       </Fieldset>
-      <Fieldset
-        label="Custom Signer (optional)"
-        title="This will only be used if non-empty."
-        style={{ marginBottom: "12px" }}
-      >
-        <p>Private Key / Mnemonic:</p>
-        <Input
-          style={{ fontSize: `12px` }}
-          value={customSigner}
-          placeholder="turkey snow danger yearly kale..."
-          onChange={(e) => setCustomSigner(e.target.value)}
-        />
-      </Fieldset>
+      <CustomSigner />
     </>
   );
 };

@@ -19,19 +19,32 @@ export function useConnection() {
   const [provider, setProvider] = useState(null);
   const [internalSigner, setInternalSigner] = useState(null);
   const [customSigner, setCustomSigner] = useState("");
+  const [address, setAddress] = useState(null);
 
-  const getSigner = () => {
-    let mySigner = internalSigner;
-    if (customSigner.trim() !== "") {
-      if (customSigner.substring(0, 2) === "0x") {
-        // private key
-        mySigner = new ethers.Wallet(customSigner.trim(), provider);
-      } else {
-        // mnemonic
-        mySigner = ethers.Wallet.fromMnemonic(customSigner.trim());
-      }
+  useEffect(() => {
+    const mySigner = customSigner || internalSigner;
+    if (mySigner) {
+      mySigner.getAddress().then((address) => setAddress(address));
     }
-    return mySigner;
+  }, [internalSigner, customSigner]);
+
+  const attemptSetCustomSigner = (customSignerString) => {
+    let mySigner;
+    try {
+      if (customSignerString.trim() !== "") {
+        if (customSignerString.substring(0, 2) === "0x") {
+          // private key
+          mySigner = new ethers.Wallet(customSignerString.trim(), provider);
+        } else {
+          // mnemonic
+          mySigner = ethers.Wallet.fromMnemonic(customSignerString.trim());
+        }
+        setCustomSigner(mySigner);
+      }
+    } catch (error) {
+      console.error(error)
+      alert("Improper mnemonic or private key.");
+    }
   };
 
   const reset = () => {
@@ -104,12 +117,14 @@ export function useConnection() {
     connection,
     setConnection,
     provider,
-    signer: getSigner(),
+    signer: customSigner || internalSigner,
     connectMetaMask,
-    customSigner,
-    setCustomSigner,
     connectCustom,
+    customSigner,
+    resetCustomSigner: () => setCustomSigner(null),
     reset,
+    attemptSetCustomSigner,
+    address,
   };
 }
 
