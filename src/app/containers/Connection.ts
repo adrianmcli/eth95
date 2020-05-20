@@ -1,6 +1,7 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+// import useSigners from "./useSigners";
 
 export enum Method {
   Localhost = "Localhost",
@@ -17,32 +18,6 @@ export const options = [
 export function useConnection() {
   const [connection, setConnection] = useState(Method.Localhost);
   const [provider, setProvider] = useState(null);
-  const [internalSigner, setInternalSigner] = useState(null);
-  const [customSigner, setCustomSigner] = useState("");
-
-  const attemptSetCustomSigner = (customSignerString) => {
-    let mySigner;
-    try {
-      if (customSignerString.trim() !== "") {
-        if (customSignerString.substring(0, 2) === "0x") {
-          // private key
-          mySigner = new ethers.Wallet(customSignerString.trim(), provider);
-        } else {
-          // mnemonic
-          mySigner = ethers.Wallet.fromMnemonic(customSignerString.trim());
-        }
-        setCustomSigner(mySigner);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Improper mnemonic or private key.");
-    }
-  };
-
-  const reset = () => {
-    setProvider(null);
-    setInternalSigner(null);
-  };
 
   const testAndSetProvider = async (provider) => {
     try {
@@ -54,22 +29,10 @@ export function useConnection() {
     }
   };
 
-  const testAndSetSigner = async (signer) => {
-    try {
-      await signer.getAddress();
-      setInternalSigner(signer);
-    } catch (error) {
-      console.error(error);
-      setInternalSigner(null);
-    }
-  };
-
   const connectLocalhost = async () => {
     try {
       const provider = new ethers.providers.JsonRpcProvider();
       testAndSetProvider(provider);
-      const signer = provider.getSigner();
-      testAndSetSigner(signer);
     } catch (error) {
       console.error(error);
     }
@@ -79,8 +42,6 @@ export function useConnection() {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       testAndSetProvider(provider);
-      const signer = provider.getSigner();
-      testAndSetSigner(signer);
     } catch (error) {
       console.error(error);
     }
@@ -91,32 +52,32 @@ export function useConnection() {
     try {
       const provider = new ethers.providers.JsonRpcProvider(nodeUrl);
       testAndSetProvider(provider);
-      const signer = provider.getSigner();
-      testAndSetSigner(signer);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    reset()
+    setProvider(null)
     if (connection === Method.Localhost) {
       connectLocalhost();
     }
   }, [connection]);
 
+  // re-register MetaMask provider whenever network changes
+  useEffect(() => {
+    window.ethereum?.on("chainIdChanged", (network) => {
+      connectMetaMask();
+    });
+  }, [provider]);
+
   return {
     connection,
     setConnection,
     provider,
-    signer: customSigner || internalSigner,
+    setProvider,
     connectMetaMask,
-    connectCustom,
-    customSigner,
-    resetCustomSigner: () => setCustomSigner(null),
-    reset,
-    attemptSetCustomSigner,
-    internalSigner
+    connectCustom
   };
 }
 

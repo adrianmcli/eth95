@@ -1,9 +1,9 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
-import Connection from "./Connection";
+import Signers from "./Signers";
 
 export function useAddress() {
-  const { customSigner, internalSigner } = Connection.useContainer();
+  const { customSigner, internalSigner } = Signers.useContainer();
   const [address, setAddress] = useState(null);
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import "./styles/global.css";
 
+import Signers from "./containers/Signers";
 import Address from "./containers/Address";
 import Contracts from "./containers/Contracts";
 import Websockets from "./containers/Websockets";
@@ -17,14 +18,16 @@ const App = () => (
   <Contracts.Provider>
     <Websockets.Provider>
       <Connection.Provider>
-        <Network.Provider>
-          <Address.Provider>
-            <Layout>
-              <Sidebar />
-              <Main />
-            </Layout>
-          </Address.Provider>
-        </Network.Provider>
+        <Signers.Provider>
+          <Network.Provider>
+            <Address.Provider>
+              <Layout>
+                <Sidebar />
+                <Main />
+              </Layout>
+            </Address.Provider>
+          </Network.Provider>
+        </Signers.Provider>
       </Connection.Provider>
     </Websockets.Provider>
   </Contracts.Provider>

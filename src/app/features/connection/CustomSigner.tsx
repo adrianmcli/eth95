@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Select, Fieldset, Button, TextField } from "react95";
-import Connection from "../../containers/Connection";
 import Input from "../common/Input";
+import Signers from "../../containers/Signers";
 
 const CustomSigner = () => {
   const [text, setText] = useState("");
-  const {
-    attemptSetCustomSigner,
-    resetCustomSigner,
-  } = Connection.useContainer();
+  const { attemptSetCustomSigner } = Signers.useContainer();
 
   return (
     <Fieldset label="Custom Signer (optional)" style={{ marginBottom: "12px" }}>

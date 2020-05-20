@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Select, Fieldset, Button, TextField } from "react95";
+import { Select, Fieldset, Button } from "react95";
 import Connection, { options, Method } from "../../containers/Connection";
 import Input from "../common/Input";
+
+import ConnectStatus from "./ConnectStatus";
 import CustomSigner from "./CustomSigner";
-import Address from "../../containers/Address";
-import Network from "../../containers/Network";
 
 const ConnectionSelector = styled(Select)`
   font-size: 14px;
@@ -20,39 +20,15 @@ const ConnectionSelector = styled(Select)`
   }
 `;
 
-const DataRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-`;
-
-const DataLabel = styled.div`
-  font-weight: bold;
-`;
-
-const DataPoint = styled.div`
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: ${(p) => (p.color ? p.color : "unset")};
-  margin-left: 12px;
-`;
-
 const ConnectOptions = () => {
   const {
     connection,
     setConnection,
     provider,
-    signer,
-    customSigner,
     connectMetaMask,
     connectCustom,
-    reset,
-    resetCustomSigner,
+    setProvider,
   } = Connection.useContainer();
-  const { address } = Address.useContainer();
-  const { network } = Network.useContainer();
   const [nodeUrl, setNodeUrl] = useState("");
 
   // console.log(network);
@@ -74,43 +50,8 @@ const ConnectOptions = () => {
           onChange={onChange}
           width="100%"
         />
-        <br />
-        <br />
 
-        <DataRow>
-          <DataLabel>Provider:</DataLabel>
-          <DataPoint color={provider ? "green" : "red"}>
-            {provider ? " Connected" : " Not Connected"}
-          </DataPoint>
-        </DataRow>
-        <DataRow>
-          <DataLabel>Signer:</DataLabel>
-          <DataPoint color={signer ? "green" : "red"}>
-            {signer ? " Connected" : " Not Connected"}
-          </DataPoint>
-        </DataRow>
-        <DataRow>
-          <DataLabel>Network:</DataLabel>
-          <DataPoint>
-            {network?.name} {network && `(${network?.chainId})`}
-          </DataPoint>
-        </DataRow>
-        <DataRow>
-          <DataLabel>Address:</DataLabel>
-          <DataPoint title={address}>{address}</DataPoint>
-        </DataRow>
-
-        {customSigner && (
-          <Button
-            style={{ marginTop: "12px" }}
-            fullWidth
-            onClick={() => {
-              resetCustomSigner();
-            }}
-          >
-            Reset Custom Signer
-          </Button>
-        )}
+        <ConnectStatus />
 
         {connection === Method.MetaMask && (
           <>
@@ -146,7 +87,7 @@ const ConnectOptions = () => {
             <Button
               fullWidth
               onClick={() => {
-                reset();
+                setProvider(null);
                 setNodeUrl("");
               }}
             >

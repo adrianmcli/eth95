@@ -15,6 +15,7 @@ export function useNetwork() {
     setNetwork(network);
   };
 
+  // update the network whenever the provider changes
   useEffect(() => {
     updateNetwork();
   }, [provider]);
