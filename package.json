@@ -1,8 +1,8 @@
 {
   "name": "eth95",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
-    "pilot": "./dist/index.js"
+    "eth95": "./dist/index.js"
   },
   "license": "MIT",
   "scripts": {
