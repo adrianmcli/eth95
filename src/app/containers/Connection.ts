@@ -19,7 +19,6 @@ export function useConnection() {
   const [provider, setProvider] = useState(null);
   const [internalSigner, setInternalSigner] = useState(null);
   const [customSigner, setCustomSigner] = useState("");
-  const [address, setAddress] = useState(null);
   const [network, setNetwork] = useState(null);
 
   const updateNetwork = async () => {
@@ -28,13 +27,6 @@ export function useConnection() {
       setNetwork(network);
     }
   };
-
-  useEffect(() => {
-    const mySigner = customSigner || internalSigner;
-    if (mySigner) {
-      mySigner.getAddress().then((address) => setAddress(address));
-    }
-  }, [internalSigner, customSigner]);
 
   const attemptSetCustomSigner = (customSignerString) => {
     let mySigner;
@@ -141,8 +133,8 @@ export function useConnection() {
     resetCustomSigner: () => setCustomSigner(null),
     reset,
     attemptSetCustomSigner,
-    address,
     network,
+    internalSigner
   };
 }
 

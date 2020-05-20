@@ -4,6 +4,7 @@ import { Select, Fieldset, Button, TextField } from "react95";
 import Connection, { options, Method } from "../../containers/Connection";
 import Input from "../common/Input";
 import CustomSigner from "./CustomSigner";
+import Address from "../../containers/Address";
 
 const ConnectionSelector = styled(Select)`
   font-size: 14px;
@@ -48,10 +49,9 @@ const ConnectOptions = () => {
     connectCustom,
     reset,
     resetCustomSigner,
-    address,
     network,
   } = Connection.useContainer();
-
+  const { address } = Address.useContainer();
   const [nodeUrl, setNodeUrl] = useState("");
 
   // console.log(network);
@@ -91,7 +91,7 @@ const ConnectOptions = () => {
         <DataRow>
           <DataLabel>Network:</DataLabel>
           <DataPoint>
-            {network?.name} ({network?.chainId})
+            {network?.name} {network && `(${network?.chainId})`}
           </DataPoint>
         </DataRow>
         <DataRow>
