@@ -5,6 +5,7 @@ import Connection, { options, Method } from "../../containers/Connection";
 import Input from "../common/Input";
 import CustomSigner from "./CustomSigner";
 import Address from "../../containers/Address";
+import Network from "../../containers/Network";
 
 const ConnectionSelector = styled(Select)`
   font-size: 14px;
@@ -49,9 +50,9 @@ const ConnectOptions = () => {
     connectCustom,
     reset,
     resetCustomSigner,
-    network,
   } = Connection.useContainer();
   const { address } = Address.useContainer();
+  const { network } = Network.useContainer();
   const [nodeUrl, setNodeUrl] = useState("");
 
   // console.log(network);

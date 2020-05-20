@@ -8,9 +8,11 @@ export function useAddress() {
 
   useEffect(() => {
     const signer = customSigner || internalSigner;
-    if (signer) {
-      signer.getAddress().then((address) => setAddress(address));
+    if (signer === null) {
+      return setAddress(null);
     }
+
+    signer.getAddress().then((address) => setAddress(address));
   }, [internalSigner, customSigner]);
 
   return {

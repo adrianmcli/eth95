@@ -19,14 +19,6 @@ export function useConnection() {
   const [provider, setProvider] = useState(null);
   const [internalSigner, setInternalSigner] = useState(null);
   const [customSigner, setCustomSigner] = useState("");
-  const [network, setNetwork] = useState(null);
-
-  const updateNetwork = async () => {
-    if (provider) {
-      const network = await provider.getNetwork();
-      setNetwork(network);
-    }
-  };
 
   const attemptSetCustomSigner = (customSignerString) => {
     let mySigner;
@@ -86,11 +78,6 @@ export function useConnection() {
   const connectMetaMask = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      // https://github.com/MetaMask/metamask-extension/issues/8226
-      window.ethereum.on("chainIdChanged", (chainId) => {
-        console.log("CHAIN CHANGED")
-        updateNetwork();
-      });
       testAndSetProvider(provider);
       const signer = provider.getSigner();
       testAndSetSigner(signer);
@@ -112,15 +99,11 @@ export function useConnection() {
   };
 
   useEffect(() => {
-    reset();
+    reset()
     if (connection === Method.Localhost) {
       connectLocalhost();
     }
   }, [connection]);
-
-  useEffect(() => {
-    updateNetwork();
-  }, [provider]);
 
   return {
     connection,
@@ -133,7 +116,6 @@ export function useConnection() {
     resetCustomSigner: () => setCustomSigner(null),
     reset,
     attemptSetCustomSigner,
-    network,
     internalSigner
   };
 }
