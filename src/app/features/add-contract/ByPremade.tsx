@@ -70,24 +70,24 @@ const ByPremade = ({ closeModal }) => {
           <ListsContainer>
             <VendorCutout>
               <Content>
-                <PremadeListItem name="Uniswap" />
-                <PremadeListItem name="OpenZeppelin" />
-                <PremadeListItem name="DappSys" />
-                <PremadeListItem name="UMA" />
-                <PremadeListItem name="Kyber" />
-                <PremadeListItem name="MakerDAO" />
-                <PremadeListItem name="Compound" />
-                <PremadeListItem name="AAVE" />
-                <PremadeListItem name="dYdX" />
-                <PremadeListItem name="Curve Finance" />
-                <PremadeListItem name="Synthetix" />
-                <PremadeListItem name="OpenSea" />
+                <PremadeListItem idx={0} name="Uniswap" />
+                <PremadeListItem idx={0} name="OpenZeppelin" />
+                <PremadeListItem idx={0} name="DappSys" />
+                <PremadeListItem idx={0} name="UMA" />
+                <PremadeListItem idx={0} name="Kyber" />
+                <PremadeListItem idx={0} name="MakerDAO" />
+                <PremadeListItem idx={0} name="Compound" />
+                <PremadeListItem idx={0} name="AAVE" />
+                <PremadeListItem idx={0} name="dYdX" />
+                <PremadeListItem idx={0} name="Curve Finance" />
+                <PremadeListItem idx={0} name="Synthetix" />
+                <PremadeListItem idx={0} name="OpenSea" />
               </Content>
             </VendorCutout>
             <VendorCutout>
               <Content>
-                <PremadeListItem name="ERC20" />
-                <PremadeListItem name="ERC721" />
+                <PremadeListItem idx={0} name="ERC20" />
+                <PremadeListItem idx={0} name="ERC721" />
               </Content>
             </VendorCutout>
           </ListsContainer>
