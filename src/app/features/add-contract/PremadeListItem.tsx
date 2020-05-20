@@ -11,12 +11,12 @@ const Item = styled.div`
   padding: 2px 4px;
 `;
 
-const ContractItem = ({ name, idx = 0 }) => {
-  const { setSelectedIdx, selectedIdx } = Contracts.useContainer();
-  const isActive = selectedIdx === idx;
-
+const PremadeListItem = ({ name, idx }) => {
+  // const { setSelectedIdx, selectedIdx } = Contracts.useContainer();
+  // const isActive = selectedIdx === idx;
+  const isActive = false;
   const handleClick = () => {
-    setSelectedIdx(isActive ? null : idx);
+    // setSelectedIdx(isActive ? null : idx);
   };
 
   return (
@@ -26,4 +26,4 @@ const ContractItem = ({ name, idx = 0 }) => {
   );
 };
 
-export default ContractItem;
+export default PremadeListItem;

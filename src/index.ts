@@ -12,9 +12,12 @@ if (process[Symbol.for("ts-node.register.instance")]) {
   process.env.ETHPILOT_DEV = "true";
 }
 
+const COLOR_BG = "#037F7F"
+const COLOR_FG = "#b8b8b8"
+
 clear();
 console.log("");
-console.log(chalk.red(figlet.textSync("EthPilot", { font: "ANSI Shadow" })));
+console.log(chalk.red(figlet.textSync("Eth95", { font: "ANSI Shadow" })));
 
 commander
   .version(require("../package.json").version)

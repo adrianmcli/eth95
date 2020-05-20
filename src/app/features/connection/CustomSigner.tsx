@@ -22,6 +22,7 @@ const CustomSigner = () => {
         onClick={() => {
           attemptSetCustomSigner(text);
         }}
+        disabled={text === ""}
       >
         Connect
       </Button>

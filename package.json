@@ -1,5 +1,5 @@
 {
-  "name": "ethpilot",
+  "name": "eth95",
   "version": "0.0.1",
   "bin": {
     "pilot": "./dist/index.js"

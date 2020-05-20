@@ -29,7 +29,7 @@ const Layout = ({ children }) => (
     <ThemeProvider theme={appTheme}>
       <AppContainer>
         <Container shadow={false}>
-          <WindowHeader>EthPilot.exe</WindowHeader>
+          <WindowHeader>Eth95.exe</WindowHeader>
           <Content>{children}</Content>
         </Container>
       </AppContainer>
