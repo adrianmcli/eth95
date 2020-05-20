@@ -17,12 +17,26 @@ export const options = [
 export function useConnection() {
   const [connection, setConnection] = useState(Method.Localhost);
   const [provider, setProvider] = useState(null);
-  const [signer, setSigner] = useState(null);
+  const [internalSigner, setInternalSigner] = useState(null);
   const [customSigner, setCustomSigner] = useState("");
+
+  const getSigner = () => {
+    let mySigner = internalSigner;
+    if (customSigner.trim() !== "") {
+      if (customSigner.substring(0, 2) === "0x") {
+        // private key
+        mySigner = new ethers.Wallet(customSigner.trim(), provider);
+      } else {
+        // mnemonic
+        mySigner = ethers.Wallet.fromMnemonic(customSigner.trim());
+      }
+    }
+    return mySigner;
+  };
 
   const reset = () => {
     setProvider(null);
-    setSigner(null);
+    setInternalSigner(null);
   };
 
   const testAndSetProvider = async (provider) => {
@@ -38,10 +52,10 @@ export function useConnection() {
   const testAndSetSigner = async (signer) => {
     try {
       await signer.getAddress();
-      setSigner(signer);
+      setInternalSigner(signer);
     } catch (error) {
       console.error(error);
-      setSigner(null);
+      setInternalSigner(null);
     }
   };
 
@@ -90,7 +104,7 @@ export function useConnection() {
     connection,
     setConnection,
     provider,
-    signer,
+    signer: getSigner(),
     connectMetaMask,
     customSigner,
     setCustomSigner,

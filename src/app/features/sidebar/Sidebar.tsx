@@ -26,6 +26,7 @@ const FilesCutout = styled(Cutout)`
   flex-grow: 1;
   background: white;
   overflow: hidden;
+  padding-bottom: 35px;
 
   &:before {
     z-index: unset;
@@ -38,7 +39,6 @@ const FilesContainer = styled.div`
   overflow: auto;
   width: 100%;
   height: 100%;
-  padding-bottom: 35px;
 `;
 
 const Sidebar = () => {
@@ -46,10 +46,8 @@ const Sidebar = () => {
   return (
     <Container>
       <ConnectOptions />
-      <br />
       <ContractsSection label="Contracts">
         <div>Contracts:</div>
-        <br />
         <FilesCutout shadow={false}>
           <FilesContainer>
             {contracts.map((c, i) => (

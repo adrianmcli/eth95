@@ -43,7 +43,7 @@ const Main = () => {
       </Container>
     );
   }
-  contract.abi;
+  console.log(contract.abi);
   return (
     <Container>
       <Content label={contract && contract.name}>
@@ -52,9 +52,23 @@ const Main = () => {
         </div>
         <FunctionsCutout>
           <FunctionsContainer>
-            {contract.abi.map((fn, i) => (
-              <div key={i}>{fn.name}</div>
-            ))}
+            {contract.abi
+              .filter((x) => x.type === "function")
+              .map((fn, i) => {
+                const { name, inputs } = fn;
+                if (inputs.length === 0) {
+                  return <div key={i}>{`${name}()`}</div>;
+                }
+                const titleTxt = inputs
+                  .map((x) => `${x.type} ${x.name}`)
+                  .join(", ");
+                return (
+                  <div
+                    key={i}
+                    title={titleTxt}
+                  >{`${name}(${inputs.length})`}</div>
+                );
+              })}
           </FunctionsContainer>
         </FunctionsCutout>
       </Content>

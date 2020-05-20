@@ -48,7 +48,7 @@ const ConnectOptions = () => {
 
   return (
     <>
-      <Fieldset label="Connection">
+      <Fieldset label="Connection" style={{ marginBottom: "12px" }}>
         <ConnectionSelector
           native
           value={connection}
@@ -59,16 +59,26 @@ const ConnectOptions = () => {
         <br />
         <br />
         <div>
-          Provider:
+          <span>Provider:</span>
           <span
-            style={{ textAlign: "left", color: provider ? "green" : "red" }}
+            style={{
+              float: "right",
+              textAlign: "left",
+              color: provider ? "green" : "red",
+            }}
           >
             {provider ? " Connected" : " Not Connected"}
           </span>
         </div>
         <div>
           Signer:
-          <span style={{ textAlign: "left", color: signer ? "green" : "red" }}>
+          <span
+            style={{
+              float: "right",
+              textAlign: "left",
+              color: signer ? "green" : "red",
+            }}
+          >
             {signer ? " Connected" : " Not Connected"}
           </span>
         </div>
@@ -114,10 +124,10 @@ const ConnectOptions = () => {
           </>
         )}
       </Fieldset>
-      <br />
       <Fieldset
         label="Custom Signer (optional)"
         title="This will only be used if non-empty."
+        style={{ marginBottom: "12px" }}
       >
         <p>Private Key / Mnemonic:</p>
         <Input
