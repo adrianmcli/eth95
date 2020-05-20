@@ -1,7 +1,6 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-// import useSigners from "./useSigners";
 
 export enum Method {
   Localhost = "Localhost",
@@ -44,6 +43,7 @@ export function useConnection() {
       testAndSetProvider(provider);
     } catch (error) {
       console.error(error);
+      alert("Cannot connect to MetaMask, are you sure it has been installed?");
     }
   };
 
@@ -58,7 +58,7 @@ export function useConnection() {
   };
 
   useEffect(() => {
-    setProvider(null)
+    setProvider(null);
     if (connection === Method.Localhost) {
       connectLocalhost();
     }
@@ -77,7 +77,7 @@ export function useConnection() {
     provider,
     setProvider,
     connectMetaMask,
-    connectCustom
+    connectCustom,
   };
 }
 
