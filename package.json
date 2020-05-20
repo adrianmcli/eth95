@@ -1,6 +1,6 @@
 {
   "name": "eth95",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "bin": {
     "eth95": "./dist/index.js"
   },
