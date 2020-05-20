@@ -18,15 +18,23 @@ const ConnectionSelector = styled(Select)`
   }
 `;
 
-const AddressContainer = styled.span`
-  float: right;
-  text-align: left;
+const DataRow = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-size: 12px;
-  max-width: 172px;
+`;
+
+const DataLabel = styled.div`
+  font-weight: bold;
+`;
+
+const DataPoint = styled.div`
+  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 3px;
+  color: ${(p) => (p.color ? p.color : "unset")};
+  margin-left: 12px;
 `;
 
 const ConnectOptions = () => {
@@ -41,9 +49,12 @@ const ConnectOptions = () => {
     reset,
     resetCustomSigner,
     address,
+    network,
   } = Connection.useContainer();
 
   const [nodeUrl, setNodeUrl] = useState("");
+
+  // console.log(network);
 
   const onChange = (e) => {
     setConnection(e.target.value);
@@ -51,7 +62,10 @@ const ConnectOptions = () => {
 
   return (
     <>
-      <Fieldset label="Connection" style={{ marginBottom: "12px" }}>
+      <Fieldset
+        label="Connection"
+        style={{ marginBottom: "12px", minWidth: "auto" }}
+      >
         <ConnectionSelector
           native
           value={connection}
@@ -61,37 +75,29 @@ const ConnectOptions = () => {
         />
         <br />
         <br />
-        <div>
-          <span>Provider:</span>
-          <span
-            style={{
-              float: "right",
-              textAlign: "left",
-              color: provider ? "green" : "red",
-            }}
-          >
-            {provider ? " Connected" : " Not Connected"}
-          </span>
-        </div>
-        <div>
-          Signer:
-          <span
-            style={{
-              float: "right",
-              textAlign: "left",
-              color: signer ? "green" : "red",
-            }}
-          >
-            {signer ? " Connected" : " Not Connected"}
-          </span>
-        </div>
 
-        {address !== null && (
-          <div>
-            Address:
-            <AddressContainer title={address}>{address}</AddressContainer>
-          </div>
-        )}
+        <DataRow>
+          <DataLabel>Provider:</DataLabel>
+          <DataPoint color={provider ? "green" : "red"}>
+            {provider ? " Connected" : " Not Connected"}
+          </DataPoint>
+        </DataRow>
+        <DataRow>
+          <DataLabel>Signer:</DataLabel>
+          <DataPoint color={signer ? "green" : "red"}>
+            {signer ? " Connected" : " Not Connected"}
+          </DataPoint>
+        </DataRow>
+        <DataRow>
+          <DataLabel>Network:</DataLabel>
+          <DataPoint>
+            {network?.name} ({network?.chainId})
+          </DataPoint>
+        </DataRow>
+        <DataRow>
+          <DataLabel>Address:</DataLabel>
+          <DataPoint title={address}>{address}</DataPoint>
+        </DataRow>
 
         {customSigner && (
           <Button

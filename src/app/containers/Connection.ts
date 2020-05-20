@@ -20,6 +20,14 @@ export function useConnection() {
   const [internalSigner, setInternalSigner] = useState(null);
   const [customSigner, setCustomSigner] = useState("");
   const [address, setAddress] = useState(null);
+  const [network, setNetwork] = useState(null);
+
+  const updateNetwork = async () => {
+    if (provider) {
+      const network = await provider.getNetwork();
+      setNetwork(network);
+    }
+  };
 
   useEffect(() => {
     const mySigner = customSigner || internalSigner;
@@ -42,7 +50,7 @@ export function useConnection() {
         setCustomSigner(mySigner);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       alert("Improper mnemonic or private key.");
     }
   };
@@ -86,6 +94,11 @@ export function useConnection() {
   const connectMetaMask = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // https://github.com/MetaMask/metamask-extension/issues/8226
+      window.ethereum.on("chainIdChanged", (chainId) => {
+        console.log("CHAIN CHANGED")
+        updateNetwork();
+      });
       testAndSetProvider(provider);
       const signer = provider.getSigner();
       testAndSetSigner(signer);
@@ -113,6 +126,10 @@ export function useConnection() {
     }
   }, [connection]);
 
+  useEffect(() => {
+    updateNetwork();
+  }, [provider]);
+
   return {
     connection,
     setConnection,
@@ -125,6 +142,7 @@ export function useConnection() {
     reset,
     attemptSetCustomSigner,
     address,
+    network,
   };
 }
 

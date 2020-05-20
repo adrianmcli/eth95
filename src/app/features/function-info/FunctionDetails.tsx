@@ -13,7 +13,7 @@ const Container = styled(Fieldset)`
 
 const Content = styled.div`
   position: absolute;
-  top: 12px;
+  top: 16px;
   left: 12px;
   right: 16px;
   bottom: 12px;

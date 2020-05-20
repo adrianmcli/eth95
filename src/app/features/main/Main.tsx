@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Fieldset, Cutout, Divider } from "react95";
 
 import Contracts from "../../containers/Contracts";
+import AddressInfo from "../address-info/AddressInfo";
 import FunctionInfo from "../function-info/FunctionInfo";
 
 const Container = styled.div`
@@ -19,6 +20,12 @@ const Content = styled.div`
   width: 100%;
   display: grid;
   grid-template-rows: 50% 50%;
+  grid-gap: 16px;
+  padding-bottom: 16px;
+`;
+
+const TopContainer = styled.div`
+  display: flex;
 `;
 
 const Main = () => {
@@ -36,7 +43,12 @@ const Main = () => {
     <Container>
       <ContentFrame label={contract && contract.name}>
         <Content>
-          <div>Exciting stuff will come here soon.</div>
+          <TopContainer>
+            <AddressInfo contract={contract} />
+            <div style={{ margin: "24px" }}>
+              Exciting stuff will come here soon.
+            </div>
+          </TopContainer>
           <FunctionInfo contract={contract} />
         </Content>
       </ContentFrame>
