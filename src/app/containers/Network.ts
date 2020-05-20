@@ -1,10 +1,11 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
 import Connection from "./Connection";
+import { Network } from "ethers/utils";
 
 export function useNetwork() {
   const { provider } = Connection.useContainer();
-  const [network, setNetwork] = useState(null);
+  const [network, setNetwork] = useState<Network | null>(null);
 
   const updateNetwork = async () => {
     if (provider === null) {

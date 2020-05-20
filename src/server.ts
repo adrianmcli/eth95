@@ -58,7 +58,7 @@ const startServer = async ({ port, paths = [] }: Input) => {
 
   server.listen(port, function () {
     console.log(
-      `Captain, you cockpit is ready for you at: http://localhost:${port}`,
+      `\nCaptain, you cockpit is ready for you at: http://localhost:${port}`,
     );
   });
 };

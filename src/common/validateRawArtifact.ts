@@ -1,4 +1,4 @@
-const validateRawArtifact = (rawArtifact) => {
+const validateRawArtifact = (rawArtifact: any) => {
   let artifact: any;
   try {
     artifact = JSON.parse(rawArtifact);
@@ -6,7 +6,7 @@ const validateRawArtifact = (rawArtifact) => {
     return false;
   }
 
-  const hasFunctions = (abi) =>
+  const hasFunctions = (abi: any[]) =>
     abi.filter((x) => x.type === "function").length > 0;
 
   if (artifact.contractName && artifact.abi && hasFunctions(artifact.abi)) {

@@ -4,7 +4,7 @@ import Signers from "./Signers";
 
 export function useAddress() {
   const { customSigner, internalSigner } = Signers.useContainer();
-  const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState<string | null>(null);
 
   useEffect(() => {
     const signer = customSigner || internalSigner;

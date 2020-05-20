@@ -1,20 +1,20 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
-import { ethers } from "ethers";
+import { ethers, Signer } from "ethers";
 import Connection from "./Connection";
 
 const useSigners = () => {
   const { provider } = Connection.useContainer();
-  const [internalSigner, setInternalSigner] = useState(null);
-  const [customSigner, setCustomSigner] = useState("");
+  const [internalSigner, setInternalSigner] = useState<Signer | null>(null);
+  const [customSigner, setCustomSigner] = useState<Signer | null>(null);
 
-  const attemptSetCustomSigner = (customSignerString) => {
+  const attemptSetCustomSigner = (customSignerString: string) => {
     let mySigner;
     try {
       if (customSignerString.trim() !== "") {
         if (customSignerString.substring(0, 2) === "0x") {
           // private key
-          mySigner = new ethers.Wallet(customSignerString.trim(), provider);
+          mySigner = new ethers.Wallet(customSignerString.trim());
         } else {
           // mnemonic
           mySigner = ethers.Wallet.fromMnemonic(customSignerString.trim());
@@ -27,7 +27,7 @@ const useSigners = () => {
     }
   };
 
-  const testAndSetSigner = async (signer) => {
+  const testAndSetSigner = async (signer: Signer) => {
     try {
       await signer.getAddress();
       setInternalSigner(signer);

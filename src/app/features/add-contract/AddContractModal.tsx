@@ -8,9 +8,9 @@ import ByArtifact from "./ByArtifact";
 import ByEtherscan from "./ByEtherscan";
 import ByPremade from "./ByPremade";
 
-const AddContractBtn = ({ closeModal }) => {
+const AddContractBtn = ({ closeModal }: { closeModal: () => {} }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const handleTabChange = (_, value) => setActiveTab(value);
+  const handleTabChange = (_: any, value: number) => setActiveTab(value);
 
   return (
     <ModalContainer>

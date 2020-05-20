@@ -8,7 +8,7 @@ function useWebsockets() {
     updateByPath,
     removeByPath,
   } = Contracts.useContainer();
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState<WebSocket | null>(null);
 
   const setup = () => {
     const ws = new WebSocket(`ws://${window.location.host}`);
@@ -29,11 +29,7 @@ function useWebsockets() {
       }
       if (data.type === "CONTRACT_CHANGED") {
         // change the specified contract by path
-        updateByPath(
-          data.artifact,
-          `${data.artifact.contractName}`,
-          data.path,
-        );
+        updateByPath(data.artifact, `${data.artifact.contractName}`, data.path);
       }
       if (data.type === "CONTRACT_DELETED") {
         // remove the specified contract by path

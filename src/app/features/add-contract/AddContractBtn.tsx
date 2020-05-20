@@ -7,7 +7,6 @@ import AddContractModal from "./AddContractModal";
 
 const customStyles = {
   overlay: {
-    position: "fixed",
     top: 0,
     left: 0,
     right: 0,

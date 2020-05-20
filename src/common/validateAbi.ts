@@ -1,4 +1,4 @@
-const validateAbi = (rawAbi) => {
+const validateAbi = (rawAbi: any) => {
   let abi: any;
   try {
     abi = JSON.parse(rawAbi);

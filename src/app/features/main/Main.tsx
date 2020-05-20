@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Fieldset, Cutout, Divider } from "react95";
+import { Fieldset } from "react95";
 
 import Contracts from "../../containers/Contracts";
 import AddressInfo from "../address-info/AddressInfo";
@@ -33,7 +33,7 @@ const Main = () => {
   if (!contract) {
     return (
       <Container>
-        <ContentFrame label={contract && contract.name}>
+        <ContentFrame>
           <div>Please select a contract.</div>
         </ContentFrame>
       </Container>

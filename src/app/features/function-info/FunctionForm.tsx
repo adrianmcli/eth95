@@ -12,7 +12,7 @@ const Container = styled(Fieldset)`
 const FunctionForm = () => {
   return (
     <Container label="Call function">
-      <p>Call the actual function</p>
+      <p>Please select a function.</p>
     </Container>
   );
 };

@@ -2,16 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import Contracts from "../../containers/Contracts";
 
+interface IProps {
+  isActive: boolean;
+}
+
 const Item = styled.div`
   height: 24px;
-  color: ${(p) => (p.isActive ? "white" : "unset")};
-  background: ${(p) => (p.isActive ? "#050289" : "unset")};
-  border: ${(p) => (p.isActive ? "1px dotted" : "unset")};
+  color: ${(p: IProps) => (p.isActive ? "white" : "unset")};
+  background: ${(p: IProps) => (p.isActive ? "#050289" : "unset")};
+  border: ${(p: IProps) => (p.isActive ? "1px dotted" : "unset")};
   cursor: default;
   padding: 2px 4px;
 `;
 
-const ContractItem = ({ name, idx = 0 }) => {
+const ContractItem = ({ name, idx = 0 }: { name: string; idx: number }) => {
   const { setSelectedIdx, selectedIdx } = Contracts.useContainer();
   const isActive = selectedIdx === idx;
 

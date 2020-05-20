@@ -33,6 +33,8 @@
     "@types/parcel-bundler": "^1.12.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/react-modal": "^3.10.5",
+    "@types/styled-components": "^5.1.0",
     "@types/ws": "^7.2.4",
     "ethers": "^4.0.47",
     "jest": "^26.0.1",

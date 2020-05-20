@@ -46,7 +46,7 @@ const Sidebar = () => {
   return (
     <Container>
       <ConnectOptions />
-      <ContractsSection label="Contracts">
+      <ContractsSection>
         <div>Contracts:</div>
         <FilesCutout shadow={false}>
           <FilesContainer>
