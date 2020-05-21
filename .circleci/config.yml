@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@2.1.1
   puppeteer: threetreeslight/puppeteer@0.1.2
 jobs:
   build-and-test:
