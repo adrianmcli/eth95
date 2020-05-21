@@ -41,20 +41,21 @@ export function useContracts() {
     });
   };
 
-  const updateByPath = (artifact: any, path: string) => {
-    console.log(path)
+  const updateByPath = (artifact: any, name: string, path: string) => {
     setContracts((prevContracts) => {
       const alreadyExist =
         prevContracts.filter((c) => c.path === path).length > 0;
 
+      // if contract does not exist, just add it
       if (!alreadyExist) {
-        addByArtifact(artifact, artifact.contractName, path);
+        addByArtifact(artifact, name, path);
         return prevContracts;
       }
 
       return prevContracts.map((c) => {
         if (c.path === path) {
-          (c.abi = artifact.abi), (c.artifact = artifact);
+          c.abi = artifact.abi;
+          c.artifact = artifact;
         }
         return c;
       });

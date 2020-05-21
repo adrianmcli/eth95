@@ -22,15 +22,11 @@ function useWebsockets() {
     ws.addEventListener("message", function (event) {
       const data = JSON.parse(event.data);
       if (data.type === "NEW_CONTRACT") {
-        addByArtifact(
-          data.artifact,
-          `${data.artifact.contractName}`,
-          data.path,
-        );
+        addByArtifact(data.artifact, data.name, data.path);
       }
       if (data.type === "CHANGE_CONTRACT") {
         // change the specified contract by path
-        updateByPath(data.artifact, data.path);
+        updateByPath(data.artifact, data.name, data.path);
       }
       if (data.type === "DELETE_CONTRACT") {
         // remove the specified contract by path

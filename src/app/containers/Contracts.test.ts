@@ -97,7 +97,29 @@ describe("Contracts state container", () => {
         path,
       },
     ]);
-    act(() => result.current.updateByPath(newArtifact, path));
+    act(() => result.current.updateByPath(newArtifact, name, path));
+    expect(result.current.contracts).toStrictEqual([
+      {
+        abi: newArtifact.abi,
+        artifact: newArtifact,
+        name,
+        path,
+      },
+    ]);
+  });
+
+  test("update contract artifact by path; but DNE so add it", () => {
+    const { result } = renderHook(() => useContracts());
+
+    const newArtifact = {
+      contractName: "Counter",
+      abi: [{ type: "function", name: "decrement" }],
+    };
+    const name = "Counter";
+    const path = "./test/path";
+
+    expect(result.current.contracts).toStrictEqual([]);
+    act(() => result.current.updateByPath(newArtifact, name, path));
     expect(result.current.contracts).toStrictEqual([
       {
         abi: newArtifact.abi,

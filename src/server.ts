@@ -37,6 +37,9 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
     });
   });
 
+  const removeExtension = (str: string) =>
+    str.split(".").slice(0, -1).join(".");
+
   // start listening for changes with chokidar
   let sender: WebSocket;
   if (artifactPath) {
@@ -51,6 +54,7 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
             type: "NEW_CONTRACT",
             artifact,
             path: filePath,
+            name: removeExtension(path.basename(filePath)),
           };
           if (sender) {
             sender.send(JSON.stringify(payload));
@@ -66,6 +70,7 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
             type: "CHANGE_CONTRACT",
             artifact,
             path: filePath,
+            name: removeExtension(path.basename(filePath)),
           };
           if (sender) {
             sender.send(JSON.stringify(payload));
@@ -93,14 +98,15 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
         const jsonFilePaths = getJsonFilePaths(artifactPath);
 
         let count = 0;
-        jsonFilePaths.forEach((path) => {
-          const rawJson = fs.readFileSync(path);
+        jsonFilePaths.forEach((filePath) => {
+          const rawJson = fs.readFileSync(filePath);
           if (validateRawArtifact(rawJson)) {
             const artifact = JSON.parse(rawJson.toString());
             const payload = {
               type: "NEW_CONTRACT",
               artifact,
               path,
+              name: removeExtension(path.basename(filePath)),
             };
             ws.send(JSON.stringify(payload));
             count++;
