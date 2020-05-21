@@ -12,6 +12,7 @@ jobs:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
+      - puppeteer/install
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
