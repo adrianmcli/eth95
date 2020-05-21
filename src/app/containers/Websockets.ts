@@ -5,7 +5,7 @@ import Contracts from "./Contracts";
 function useWebsockets() {
   const {
     addByArtifact,
-    updateByPath,
+    upsertByPath,
     removeByPath,
   } = Contracts.useContainer();
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -21,12 +21,9 @@ function useWebsockets() {
     // Listen for messages
     ws.addEventListener("message", function (event) {
       const data = JSON.parse(event.data);
-      if (data.type === "NEW_CONTRACT") {
-        addByArtifact(data.artifact, data.name, data.path);
-      }
-      if (data.type === "CHANGE_CONTRACT") {
-        // change the specified contract by path
-        updateByPath(data.artifact, data.name, data.path);
+      if (data.type === "NEW_CONTRACT" || data.type === "CHANGE_CONTRACT") {
+        // upsert the specified contract by path
+        upsertByPath(data.artifact, data.name, data.path);
       }
       if (data.type === "DELETE_CONTRACT") {
         // remove the specified contract by path

@@ -74,7 +74,7 @@ describe("Contracts state container", () => {
     ]);
   });
 
-  test("update contract artifact by path", () => {
+  test("upsert contract artifact by path", () => {
     const { result } = renderHook(() => useContracts());
 
     const oldArtifact = {
@@ -97,7 +97,7 @@ describe("Contracts state container", () => {
         path,
       },
     ]);
-    act(() => result.current.updateByPath(newArtifact, name, path));
+    act(() => result.current.upsertByPath(newArtifact, name, path));
     expect(result.current.contracts).toStrictEqual([
       {
         abi: newArtifact.abi,
@@ -119,7 +119,7 @@ describe("Contracts state container", () => {
     const path = "./test/path";
 
     expect(result.current.contracts).toStrictEqual([]);
-    act(() => result.current.updateByPath(newArtifact, name, path));
+    act(() => result.current.upsertByPath(newArtifact, name, path));
     expect(result.current.contracts).toStrictEqual([
       {
         abi: newArtifact.abi,
@@ -167,7 +167,7 @@ describe("Contracts state container", () => {
     const name = "Counter";
     const path = "./test/path";
 
-    act(() => result.current.addByArtifact(first, name, path));
+    act(() => result.current.upsertByPath(first, name, path));
     expect(result.current.contracts.length).toBe(1);
     expect(result.current.contracts).toStrictEqual([
       {
@@ -177,7 +177,7 @@ describe("Contracts state container", () => {
         path,
       },
     ]);
-    act(() => result.current.addByArtifact(second, name, path));
+    act(() => result.current.upsertByPath(second, name, path));
     expect(result.current.contracts.length).toBe(1);
     expect(result.current.contracts).toStrictEqual([
       {

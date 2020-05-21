@@ -9,13 +9,6 @@ interface Contract {
   path?: string;
 }
 
-const makeNewContract = (artifact: any, name: string, path?: string) => ({
-  name,
-  abi: artifact.abi,
-  artifact,
-  path,
-});
-
 export function useContracts() {
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
@@ -40,31 +33,15 @@ export function useContracts() {
   };
 
   const addByArtifact = (artifact: any, name: string, path?: string) => {
-    setContracts((prevContracts) => {
-      const alreadyExist =
-        prevContracts.filter((c) => c.path === path).length > 0;
-
-      // if contract already exists, just update it
-      if (alreadyExist) {
-        return prevContracts.map((c) => {
-          if (c.path === path) {
-            c.abi = artifact.abi;
-            c.artifact = artifact;
-          }
-          return c;
-        });
-      }
-
-      // otherwise, we add it
-      const newContracts = [
-        ...prevContracts,
-        makeNewContract(artifact, name, path),
-      ];
-      return newContracts.sort((a, b) => a.name.localeCompare(b.name));
+    addContract({
+      name,
+      abi: artifact.abi,
+      artifact,
+      path,
     });
   };
 
-  const updateByPath = (artifact: any, name: string, path: string) => {
+  const upsertByPath = (artifact: any, name: string, path: string) => {
     setContracts((prevContracts) => {
       const alreadyExist =
         prevContracts.filter((c) => c.path === path).length > 0;
@@ -73,7 +50,12 @@ export function useContracts() {
       if (!alreadyExist) {
         const newContracts = [
           ...prevContracts,
-          makeNewContract(artifact, name, path),
+          {
+            name,
+            abi: artifact.abi,
+            artifact,
+            path,
+          },
         ];
         return newContracts.sort((a, b) => a.name.localeCompare(b.name));
       }
@@ -101,7 +83,7 @@ export function useContracts() {
     removeContractByIdx,
     addByAbi,
     addByArtifact,
-    updateByPath,
+    upsertByPath,
     removeByPath,
     selectedIdx,
     selectedContract,
