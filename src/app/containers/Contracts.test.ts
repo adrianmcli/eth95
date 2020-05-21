@@ -74,7 +74,7 @@ describe("Contracts state container", () => {
     ]);
   });
 
-  test("upsert contract artifact by path", () => {
+  test("add by artifact, then update w/ upsert", () => {
     const { result } = renderHook(() => useContracts());
 
     const foo = {
@@ -110,7 +110,7 @@ describe("Contracts state container", () => {
     ]);
   });
 
-  test("upsert contract artifact by path; but DNE so add it", () => {
+  test("upsert, contract does not exist", () => {
     const { result } = renderHook(() => useContracts());
 
     const foo = {
@@ -132,30 +132,7 @@ describe("Contracts state container", () => {
     ]);
   });
 
-  test("remove contract by path", () => {
-    const { result } = renderHook(() => useContracts());
-
-    const foo = {
-      contractName: "Counter",
-      abi: [{ type: "function", name: "increment" }],
-      name: "Counter",
-      path: "./test/path",
-    };
-
-    act(() => result.current.addByArtifact(foo, foo.name, foo.path));
-    expect(result.current.contracts).toStrictEqual([
-      {
-        abi: foo.abi,
-        artifact: foo,
-        name: foo.name,
-        path: foo.path,
-      },
-    ]);
-    act(() => result.current.removeByPath(foo.path));
-    expect(result.current.contracts).toStrictEqual([]);
-  });
-
-  test("when upserting, if contract exists (by path), just update", () => {
+  test("upsert, contract already exists", () => {
     const { result } = renderHook(() => useContracts());
 
     const foo = {
@@ -189,5 +166,28 @@ describe("Contracts state container", () => {
         path: bar.path,
       },
     ]);
+  });
+
+  test("remove contract by path", () => {
+    const { result } = renderHook(() => useContracts());
+
+    const foo = {
+      contractName: "Counter",
+      abi: [{ type: "function", name: "increment" }],
+      name: "Counter",
+      path: "./test/path",
+    };
+
+    act(() => result.current.addByArtifact(foo, foo.name, foo.path));
+    expect(result.current.contracts).toStrictEqual([
+      {
+        abi: foo.abi,
+        artifact: foo,
+        name: foo.name,
+        path: foo.path,
+      },
+    ]);
+    act(() => result.current.removeByPath(foo.path));
+    expect(result.current.contracts).toStrictEqual([]);
   });
 });
