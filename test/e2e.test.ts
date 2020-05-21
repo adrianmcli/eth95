@@ -4,7 +4,7 @@ import puppeteer, { Browser, Page } from "puppeteer";
 import { spawn, ChildProcess } from "child_process";
 import getPort from "get-port";
 import portUsed from "tcp-port-used"
-import validateRawArtifact from "./common/validateRawArtifact";
+import validateRawArtifact from "../src/common/validateRawArtifact";
 
 jest.setTimeout(20000);
 
