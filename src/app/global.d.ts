@@ -4,9 +4,4 @@ declare global {
   }
 }
 
-// See https://github.com/DefinitelyTyped/DefinitelyTyped/issues/24419
-interface Element { }
-interface Node { }
-interface NodeListOf<TNode = Node> { }
-
 export {};
