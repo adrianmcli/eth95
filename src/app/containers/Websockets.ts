@@ -13,8 +13,9 @@ function useWebsockets() {
   const setup = () => {
     const ws = new WebSocket(`ws://${window.location.host}`);
     // Connection opened
-    ws.addEventListener("open", function (event) {
-      ws.send("CONNECTION_OPENED");
+    ws.addEventListener("open", function () {
+      const data = JSON.stringify({ type: "CONNECTION_OPENED" });
+      ws.send(data);
     });
 
     // Listen for messages
@@ -27,11 +28,11 @@ function useWebsockets() {
           data.path,
         );
       }
-      if (data.type === "CONTRACT_CHANGED") {
+      if (data.type === "CHANGE_CONTRACT") {
         // change the specified contract by path
-        updateByPath(data.artifact, `${data.artifact.contractName}`, data.path);
+        updateByPath(data.artifact, data.path);
       }
-      if (data.type === "CONTRACT_DELETED") {
+      if (data.type === "DELETE_CONTRACT") {
         // remove the specified contract by path
         removeByPath(data.path);
       }

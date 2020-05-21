@@ -97,7 +97,7 @@ describe("Contracts state container", () => {
         path,
       },
     ]);
-    act(() => result.current.updateByPath(newArtifact, name, path));
+    act(() => result.current.updateByPath(newArtifact, path));
     expect(result.current.contracts).toStrictEqual([
       {
         abi: newArtifact.abi,

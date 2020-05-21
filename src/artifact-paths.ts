@@ -1,20 +1,13 @@
 import path from "path";
 import fs from "fs";
 
-const getArtifactPaths = (artifactPath: string): string[] => {
-  const artifactDir = path.resolve(artifactPath);
-  console.log("\nWatching artifacts in:", artifactDir);
-
-  const files = fs.readdirSync(artifactDir);
+export const getJsonFilePaths = (artifactPath: string): string[] => {
+  const files = fs.readdirSync(artifactPath);
   const jsonFiles = files.filter(
     (filename) => filename.split(".").pop()?.toLowerCase() === "json",
   );
-
   const jsonPaths = jsonFiles.map((filename) =>
-    path.join(artifactDir, filename),
+    path.join(artifactPath, filename),
   );
-
   return jsonPaths;
 };
-
-export default getArtifactPaths;

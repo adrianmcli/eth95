@@ -1,21 +1,27 @@
-import express from "express";
-import http from "http";
 import fs from "fs";
+import path from "path";
+import http from "http";
+import express from "express";
 import WebSocket from "ws";
+import chalk from "chalk";
+import chokidar from "chokidar";
 
 import devClientMiddleware from "./dev-client";
 import validateRawArtifact from "./common/validateRawArtifact";
+import log from "./logger";
+import { getJsonFilePaths } from "./artifact-paths";
 
-interface Input {
+interface IServer {
   port: number;
   paths?: string[];
+  artifactPath?: string;
 }
 
-const startServer = async ({ port, paths = [] }: Input) => {
+const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
   const app: express.Application = express();
 
   // use middleware if in development, otherwise serve prod build
-  if (process.env.ETHPILOT_DEV) {
+  if (process.env.ETH95_DEV) {
     app.use("/", devClientMiddleware());
   } else {
     app.use("/", express.static(__dirname + "/app"));
@@ -31,12 +37,63 @@ const startServer = async ({ port, paths = [] }: Input) => {
     });
   });
 
-  wss.on("connection", function (ws, request) {
+  // start listening for changes with chokidar
+  let sender: WebSocket;
+  if (artifactPath) {
+    chokidar
+      .watch(`${artifactPath}/*.json`)
+      .on("add", (filePath) => {
+        const rawJson = fs.readFileSync(filePath);
+        if (validateRawArtifact(rawJson)) {
+          log.info(`New contract: ${path.basename(filePath)}`);
+          const artifact = JSON.parse(rawJson.toString());
+          const payload = {
+            type: "NEW_CONTRACT",
+            artifact,
+            path: filePath,
+          };
+          if (sender) {
+            sender.send(JSON.stringify(payload));
+          }
+        }
+      })
+      .on("change", (filePath) => {
+        const rawJson = fs.readFileSync(filePath);
+        if (validateRawArtifact(rawJson)) {
+          log.info(`Contract changed: ${path.basename(filePath)}`);
+          const artifact = JSON.parse(rawJson.toString());
+          const payload = {
+            type: "CHANGE_CONTRACT",
+            artifact,
+            path: filePath,
+          };
+          if (sender) {
+            sender.send(JSON.stringify(payload));
+          }
+        }
+      })
+      .on("unlink", (filePath) => {
+        log.info(`Contract deleted: ${path.basename(filePath)}`);
+        const payload = {
+          type: "DELETE_CONTRACT",
+          path: filePath,
+        };
+        if (sender) {
+          sender.send(JSON.stringify(payload));
+        }
+      });
+  }
+
+  wss.on("connection", function (ws) {
+    sender = ws;
     ws.on("message", function (message) {
-      // console.log(`Received message from client: ${message}`);
-      if (message === "CONNECTION_OPENED" && paths.length > 0) {
-        // loop through files and send its contents
-        paths.forEach((path) => {
+      const msg = JSON.parse(message as string);
+      if (msg.type === "CONNECTION_OPENED" && artifactPath) {
+        // load initial state (i.e. send all valid files over)
+        const jsonFilePaths = getJsonFilePaths(artifactPath);
+
+        let count = 0;
+        jsonFilePaths.forEach((path) => {
           const rawJson = fs.readFileSync(path);
           if (validateRawArtifact(rawJson)) {
             const artifact = JSON.parse(rawJson.toString());
@@ -46,8 +103,10 @@ const startServer = async ({ port, paths = [] }: Input) => {
               path,
             };
             ws.send(JSON.stringify(payload));
+            count++;
           }
         });
+        log.info(`Sent ${count} contract(s) to client`);
       }
     });
 
@@ -57,8 +116,8 @@ const startServer = async ({ port, paths = [] }: Input) => {
   });
 
   server.listen(port, function () {
-    console.log(
-      `\nCaptain, you cockpit is ready for you at: http://localhost:${port}`,
+    log.success(
+      `Your dashboard is ready at: ${chalk.yellow(`http://localhost:${port}`)}`,
     );
   });
 };

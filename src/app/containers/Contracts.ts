@@ -41,15 +41,24 @@ export function useContracts() {
     });
   };
 
-  const updateByPath = (artifact: any, name: string, path: string) => {
-    setContracts((prevContracts) =>
-      prevContracts.map((c) => {
+  const updateByPath = (artifact: any, path: string) => {
+    console.log(path)
+    setContracts((prevContracts) => {
+      const alreadyExist =
+        prevContracts.filter((c) => c.path === path).length > 0;
+
+      if (!alreadyExist) {
+        addByArtifact(artifact, artifact.contractName, path);
+        return prevContracts;
+      }
+
+      return prevContracts.map((c) => {
         if (c.path === path) {
           (c.abi = artifact.abi), (c.artifact = artifact);
         }
         return c;
-      }),
-    );
+      });
+    });
   };
 
   const removeByPath = (path: string) => {

@@ -1,7 +1,7 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { Provider, JsonRpcProvider, Web3Provider } from "ethers/providers";
+import { JsonRpcProvider, Web3Provider } from "ethers/providers";
 
 export enum Method {
   Localhost = "Localhost",
@@ -72,7 +72,7 @@ export function useConnection() {
 
   // re-register MetaMask provider whenever network changes
   useEffect(() => {
-    window.ethereum?.on("chainIdChanged", () => {
+    window.ethereum?.on("networkChanged", () => {
       connectMetaMask();
     });
   }, [provider]);
