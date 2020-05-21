@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   puppeteer: threetreeslight/puppeteer@0.1.2
-  node: circleci/node@2.1.1
+  node: circleci/node@1.1.6
 jobs:
   build-and-test:
     executor:
@@ -9,17 +9,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        name: Restore Yarn Package Cache
-        keys:
-          - yarn-packages-{{ checksum "yarn.lock" }}
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - run:
-          name: Run Tests
+          name: Run tests
           command: yarn test
       - run:
-          name: Build Project
+          name: Build project
           command: yarn build
       - save_cache:
           name: Save Yarn Package Cache
