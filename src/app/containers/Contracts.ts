@@ -65,6 +65,7 @@ export function useContracts() {
         if (c.path === path) {
           c.abi = artifact.abi;
           c.artifact = artifact;
+          c.name = name;
         }
         return c;
       });

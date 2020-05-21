@@ -77,55 +77,57 @@ describe("Contracts state container", () => {
   test("upsert contract artifact by path", () => {
     const { result } = renderHook(() => useContracts());
 
-    const oldArtifact = {
-      contractName: "Counter",
-      abi: [{ type: "function", name: "increment" }],
+    const foo = {
+      contractName: "Foo",
+      abi: [{ type: "function", name: "foo" }],
+      name: "Foo",
+      path: "./test/path",
     };
-    const newArtifact = {
-      contractName: "Counter",
-      abi: [{ type: "function", name: "decrement" }],
+    const bar = {
+      contractName: "Bar",
+      abi: [{ type: "function", name: "bar" }],
+      name: "Foo",
+      path: "./test/path",
     };
-    const name = "Counter";
-    const path = "./test/path";
 
-    act(() => result.current.addByArtifact(oldArtifact, name, path));
+    act(() => result.current.addByArtifact(foo, foo.name, foo.path));
     expect(result.current.contracts).toStrictEqual([
       {
-        abi: oldArtifact.abi,
-        artifact: oldArtifact,
-        name,
-        path,
+        abi: foo.abi,
+        artifact: foo,
+        name: foo.name,
+        path: foo.path,
       },
     ]);
-    act(() => result.current.upsertByPath(newArtifact, name, path));
+    act(() => result.current.upsertByPath(bar, bar.name, bar.path));
     expect(result.current.contracts).toStrictEqual([
       {
-        abi: newArtifact.abi,
-        artifact: newArtifact,
-        name,
-        path,
+        abi: bar.abi,
+        artifact: bar,
+        name: bar.name,
+        path: bar.path,
       },
     ]);
   });
 
-  test("update contract artifact by path; but DNE so add it", () => {
+  test("upsert contract artifact by path; but DNE so add it", () => {
     const { result } = renderHook(() => useContracts());
 
-    const newArtifact = {
+    const foo = {
       contractName: "Counter",
       abi: [{ type: "function", name: "decrement" }],
+      name: "Counter",
+      path: "./test/path",
     };
-    const name = "Counter";
-    const path = "./test/path";
 
     expect(result.current.contracts).toStrictEqual([]);
-    act(() => result.current.upsertByPath(newArtifact, name, path));
+    act(() => result.current.upsertByPath(foo, foo.name, foo.path));
     expect(result.current.contracts).toStrictEqual([
       {
-        abi: newArtifact.abi,
-        artifact: newArtifact,
-        name,
-        path,
+        abi: foo.abi,
+        artifact: foo,
+        name: foo.name,
+        path: foo.path,
       },
     ]);
   });
@@ -133,58 +135,58 @@ describe("Contracts state container", () => {
   test("remove contract by path", () => {
     const { result } = renderHook(() => useContracts());
 
-    const testArtifact = {
+    const foo = {
       contractName: "Counter",
       abi: [{ type: "function", name: "increment" }],
+      name: "Counter",
+      path: "./test/path",
     };
-    const name = "Counter";
-    const path = "./test/path";
 
-    act(() => result.current.addByArtifact(testArtifact, name, path));
+    act(() => result.current.addByArtifact(foo, foo.name, foo.path));
     expect(result.current.contracts).toStrictEqual([
       {
-        abi: testArtifact.abi,
-        artifact: testArtifact,
-        name,
-        path,
+        abi: foo.abi,
+        artifact: foo,
+        name: foo.name,
+        path: foo.path,
       },
     ]);
-    act(() => result.current.removeByPath(path));
+    act(() => result.current.removeByPath(foo.path));
     expect(result.current.contracts).toStrictEqual([]);
   });
 
-  test("when adding, if same contract exists (by path), just update", () => {
+  test("when upserting, if contract exists (by path), just update", () => {
     const { result } = renderHook(() => useContracts());
 
-    const first = {
-      contractName: "Counter",
-      abi: [{ type: "function", name: "increment" }],
+    const foo = {
+      contractName: "Foo",
+      abi: [{ type: "function", name: "flip" }],
+      name: "Foo",
+      path: "./test/path",
     };
-    const second = {
-      contractName: "Counter",
-      abi: [{ type: "function", name: "decrement" }],
+    const bar = {
+      contractName: "Bar",
+      abi: [{ type: "function", name: "flop" }],
+      name: "Bar",
+      path: "./test/path",
     };
-    const name = "Counter";
-    const path = "./test/path";
 
-    act(() => result.current.upsertByPath(first, name, path));
-    expect(result.current.contracts.length).toBe(1);
+    act(() => result.current.upsertByPath(foo, foo.name, foo.path));
     expect(result.current.contracts).toStrictEqual([
       {
-        abi: first.abi,
-        artifact: first,
-        name,
-        path,
+        abi: foo.abi,
+        artifact: foo,
+        name: foo.name,
+        path: foo.path,
       },
     ]);
-    act(() => result.current.upsertByPath(second, name, path));
-    expect(result.current.contracts.length).toBe(1);
+    act(() => result.current.upsertByPath(bar, bar.name, bar.path));
     expect(result.current.contracts).toStrictEqual([
       {
-        abi: second.abi,
-        artifact: second,
-        name,
-        path,
+        abi: bar.abi,
+        artifact: bar,
+        name: bar.name,
+        path: bar.path,
       },
     ]);
   });
