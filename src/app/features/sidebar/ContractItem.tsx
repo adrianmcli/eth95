@@ -24,7 +24,11 @@ const ContractItem = ({ name, idx = 0 }: { name: string; idx: number }) => {
   };
 
   return (
-    <Item isActive={isActive} onClick={handleClick}>
+    <Item
+      isActive={isActive}
+      onClick={handleClick}
+      className="contract-list-item"
+    >
       {name}
     </Item>
   );

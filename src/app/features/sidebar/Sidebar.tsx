@@ -49,7 +49,7 @@ const Sidebar = () => {
       <ContractsSection>
         <div>Contracts:</div>
         <FilesCutout shadow={false}>
-          <FilesContainer>
+          <FilesContainer className="contract-list">
             {contracts.map((c, i) => (
               <ContractItem key={c.name} idx={i} name={c.name} />
             ))}

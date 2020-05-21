@@ -22,8 +22,8 @@ interface IProps {
 
 const FunctionItem = ({ fn, isActive, onClick }: IProps) => {
   return (
-    <Item isActive={isActive} onClick={onClick}>
-      {fn.name}({fn.inputs.length})
+    <Item isActive={isActive} onClick={onClick} className="function-list-item">
+      {fn.name}({fn.inputs?.length})
     </Item>
   );
 };
