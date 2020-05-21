@@ -47,7 +47,7 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
       .watch(`${artifactPath}/*.json`)
       .on("add", (filePath) => {
         const rawJson = fs.readFileSync(filePath);
-        if (validateRawArtifact(rawJson)) {
+        if (sender && validateRawArtifact(rawJson)) {
           log.info(`New contract: ${path.basename(filePath)}`);
           const artifact = JSON.parse(rawJson.toString());
           const payload = {
@@ -56,14 +56,12 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
             path: filePath,
             name: removeExtension(path.basename(filePath)),
           };
-          if (sender) {
-            sender.send(JSON.stringify(payload));
-          }
+          sender.send(JSON.stringify(payload));
         }
       })
       .on("change", (filePath) => {
         const rawJson = fs.readFileSync(filePath);
-        if (validateRawArtifact(rawJson)) {
+        if (sender && validateRawArtifact(rawJson)) {
           log.info(`Contract changed: ${path.basename(filePath)}`);
           const artifact = JSON.parse(rawJson.toString());
           const payload = {
@@ -72,18 +70,16 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
             path: filePath,
             name: removeExtension(path.basename(filePath)),
           };
-          if (sender) {
-            sender.send(JSON.stringify(payload));
-          }
+          sender.send(JSON.stringify(payload));
         }
       })
       .on("unlink", (filePath) => {
-        log.info(`Contract deleted: ${path.basename(filePath)}`);
-        const payload = {
-          type: "DELETE_CONTRACT",
-          path: filePath,
-        };
         if (sender) {
+          log.info(`Contract deleted: ${path.basename(filePath)}`);
+          const payload = {
+            type: "DELETE_CONTRACT",
+            path: filePath,
+          };
           sender.send(JSON.stringify(payload));
         }
       });
@@ -105,7 +101,7 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
             const payload = {
               type: "NEW_CONTRACT",
               artifact,
-              path,
+              path: filePath,
               name: removeExtension(path.basename(filePath)),
             };
             ws.send(JSON.stringify(payload));
