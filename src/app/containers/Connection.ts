@@ -44,7 +44,7 @@ export function useConnection() {
 
   const connectMetaMask = async () => {
     try {
-      window.ethereum.enable();
+      await window.ethereum.enable();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       testAndSetProvider(provider);
     } catch (error) {
