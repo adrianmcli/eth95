@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-        pkg-manager: yarn
+          pkg-manager: yarn
       - run:
           name: Run tests
           command: yarn test
