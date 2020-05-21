@@ -3,6 +3,7 @@ import fs from "fs";
 import puppeteer, { Browser, Page } from "puppeteer";
 import { spawn, ChildProcess } from "child_process";
 import getPort from "get-port";
+import portUsed from "tcp-port-used"
 import validateRawArtifact from "./common/validateRawArtifact";
 
 jest.setTimeout(20000);
@@ -40,10 +41,12 @@ describe("End-to-end test", () => {
     ]);
     if (serverProcess.stdout !== null) {
       serverProcess.stdout.on("data", (data) => {
+        // for debugging:
         // console.log(data.slice(0, data.length - 1).toString("utf8"));
       });
     }
-    await sleep(2000); // wait for server to spin up
+
+    await portUsed.waitUntilUsed(port, 200, 5000)
     browser = await puppeteer.launch();
     page = await browser.newPage();
     await page.goto(`http://localhost:${port}`, { waitUntil: "networkidle2" });
