@@ -152,4 +152,40 @@ describe("Contracts state container", () => {
     act(() => result.current.removeByPath(path));
     expect(result.current.contracts).toStrictEqual([]);
   });
+
+  test("when adding, if same contract exists (by path), just update", () => {
+    const { result } = renderHook(() => useContracts());
+
+    const first = {
+      contractName: "Counter",
+      abi: [{ type: "function", name: "increment" }],
+    };
+    const second = {
+      contractName: "Counter",
+      abi: [{ type: "function", name: "decrement" }],
+    };
+    const name = "Counter";
+    const path = "./test/path";
+
+    act(() => result.current.addByArtifact(first, name, path));
+    expect(result.current.contracts.length).toBe(1);
+    expect(result.current.contracts).toStrictEqual([
+      {
+        abi: first.abi,
+        artifact: first,
+        name,
+        path,
+      },
+    ]);
+    act(() => result.current.addByArtifact(second, name, path));
+    expect(result.current.contracts.length).toBe(1);
+    expect(result.current.contracts).toStrictEqual([
+      {
+        abi: second.abi,
+        artifact: second,
+        name,
+        path,
+      },
+    ]);
+  });
 });

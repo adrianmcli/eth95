@@ -9,6 +9,13 @@ interface Contract {
   path?: string;
 }
 
+const makeNewContract = (artifact: any, name: string, path?: string) => ({
+  name,
+  abi: artifact.abi,
+  artifact,
+  path,
+});
+
 export function useContracts() {
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
@@ -33,11 +40,27 @@ export function useContracts() {
   };
 
   const addByArtifact = (artifact: any, name: string, path?: string) => {
-    addContract({
-      name,
-      abi: artifact.abi,
-      artifact,
-      path,
+    setContracts((prevContracts) => {
+      const alreadyExist =
+        prevContracts.filter((c) => c.path === path).length > 0;
+
+      // if contract already exists, just update it
+      if (alreadyExist) {
+        return prevContracts.map((c) => {
+          if (c.path === path) {
+            c.abi = artifact.abi;
+            c.artifact = artifact;
+          }
+          return c;
+        });
+      }
+
+      // otherwise, we add it
+      const newContracts = [
+        ...prevContracts,
+        makeNewContract(artifact, name, path),
+      ];
+      return newContracts.sort((a, b) => a.name.localeCompare(b.name));
     });
   };
 
@@ -48,10 +71,14 @@ export function useContracts() {
 
       // if contract does not exist, just add it
       if (!alreadyExist) {
-        addByArtifact(artifact, name, path);
-        return prevContracts;
+        const newContracts = [
+          ...prevContracts,
+          makeNewContract(artifact, name, path),
+        ];
+        return newContracts.sort((a, b) => a.name.localeCompare(b.name));
       }
 
+      // otherwise, update existing contract
       return prevContracts.map((c) => {
         if (c.path === path) {
           c.abi = artifact.abi;

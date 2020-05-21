@@ -40,7 +40,7 @@ describe("End-to-end test", () => {
     ]);
     if (serverProcess.stdout !== null) {
       serverProcess.stdout.on("data", (data) => {
-        console.log(data.slice(0, data.length - 1).toString("utf8"));
+        // console.log(data.slice(0, data.length - 1).toString("utf8"));
       });
     }
     await sleep(2000); // wait for server to spin up
