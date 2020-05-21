@@ -8,14 +8,24 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - restore_cache:
+        name: Restore Yarn Package Cache
+        keys:
+          - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Run tests
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - run:
+          name: Run Tests
           command: yarn test
       - run:
-          name: Build project
+          name: Build Project
           command: yarn build
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 workflows:
     build-and-test:
       jobs:
