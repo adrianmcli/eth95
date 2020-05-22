@@ -26,8 +26,15 @@ img {
 }
 
 /* Custom Global Styles */
+@font-face {
+  font-family: 'MS-Sans-Serif';
+  src: url("./MS-Sans-Serif.woff2") format("woff2");
+}
+
 body {
-  font-family: 'Libre Franklin', sans-serif;
+  /* font-family: 'Libre Franklin', sans-serif; */
+  font-family: 'MS-Sans-Serif', sans-serif;
+  letter-spacing: 1px;
 }
 
 li {
