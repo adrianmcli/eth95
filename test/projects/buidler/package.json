@@ -1,0 +1,22 @@
+{
+  "name": "buidler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "buidler.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/buidler": "^1.3.4",
+    "@nomiclabs/buidler-ethers": "^1.3.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.0.1"
+  }
+}
