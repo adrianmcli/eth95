@@ -7,10 +7,16 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "build": "rm -rf dist && yarn build:tsc && yarn build:parcel",
-    "build:tsc": "tsc -p . && tsc -p ./src/app",
-    "build:parcel": "parcel build src/app/index.html -d dist/app",
+    "build": "rm -rf dist && yarn tsc && yarn bundle",
+    "tsc": "tsc -p . && tsc -p ./src/app",
+    "bundle": "parcel build src/app/index.html -d dist/app",
     "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn tsc",
+      "pre-push": "yarn test"
+    }
   },
   "dependencies": {
     "chalk": "^4.0.0",
@@ -39,6 +45,7 @@
     "@types/ws": "^7.2.4",
     "ethers": "^4.0.47",
     "get-port": "^5.1.1",
+    "husky": "^4.2.5",
     "jest": "^26.0.1",
     "jest-puppeteer": "^4.4.0",
     "nodemon": "^2.0.4",
