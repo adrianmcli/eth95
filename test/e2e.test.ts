@@ -83,7 +83,7 @@ describe("End-to-end test", () => {
     const functionLabels = await page.$$(`.function-list-item`);
     const fnLabel = await functionLabels[0].evaluate((el) => el.innerHTML);
     expect(functionLabels.length).toBe(1);
-    expect(fnLabel).toBe("foo()");
+    expect(fnLabel).toBe("foo(0)");
   });
 
   test("update contract function name", async () => {
@@ -97,7 +97,7 @@ describe("End-to-end test", () => {
     const functionLabels = await page.$$(`.function-list-item`);
     const fnLabel = await functionLabels[0].evaluate((el) => el.innerHTML);
     expect(functionLabels.length).toBe(1);
-    expect(fnLabel).toBe("baz()");
+    expect(fnLabel).toBe("baz(0)");
   });
 
   test("added contract file shows in contract list", async () => {

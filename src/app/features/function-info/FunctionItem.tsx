@@ -21,7 +21,8 @@ interface IProps {
 }
 
 const FunctionItem = ({ fn, isActive, onClick }: IProps) => {
-  const label = `${fn.name}(${fn.inputs?.length})`;
+  const arity = fn.inputs?.length || 0;
+  const label = `${fn.name}(${arity})`;
   return (
     <Item
       isActive={isActive}
