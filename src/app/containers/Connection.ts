@@ -84,6 +84,7 @@ export function useConnection() {
     setProvider,
     connectMetaMask,
     connectCustom,
+    connectLocalhost,
   };
 }
 

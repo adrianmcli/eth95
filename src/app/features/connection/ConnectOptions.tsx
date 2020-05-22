@@ -6,8 +6,9 @@ import Select from "../common/Select";
 
 import ConnectStatus from "./ConnectStatus";
 import CustomSigner from "./CustomSigner";
-import ByCustomNode from "./ByCustomNode";
+import ByLocalhost from "./ByLocalhost";
 import ByMetaMask from "./ByMetaMask";
+import ByCustomNode from "./ByCustomNode";
 
 const ConnectOptions = () => {
   const { connection, setConnection } = Connection.useContainer();
@@ -28,6 +29,7 @@ const ConnectOptions = () => {
 
         <ConnectStatus />
 
+        {connection === Method.Localhost && <ByLocalhost />}
         {connection === Method.MetaMask && <ByMetaMask />}
         {connection === Method.Custom && <ByCustomNode />}
       </Fieldset>
