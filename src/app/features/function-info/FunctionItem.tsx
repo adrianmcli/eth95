@@ -21,9 +21,15 @@ interface IProps {
 }
 
 const FunctionItem = ({ fn, isActive, onClick }: IProps) => {
+  const label = `${fn.name}(${fn.inputs?.length})`;
   return (
-    <Item isActive={isActive} onClick={onClick} className="function-list-item">
-      {fn.name}({fn.inputs?.length})
+    <Item
+      isActive={isActive}
+      onClick={onClick}
+      className="function-list-item"
+      title={label}
+    >
+      {label}
     </Item>
   );
 };
