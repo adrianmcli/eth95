@@ -5,15 +5,16 @@ import "@nomiclabs/buidler/console.sol";
 
 contract Counter {
     uint256 count = 0;
+    event UpdatedCount(uint256 count);
 
     function increment() public {
         count++;
-        console.log("Incremented to '%s'", count);
+        emit UpdatedCount(count);
     }
 
     function incrementBy(uint256 x) public {
         count = count + x;
-        console.log("Incremented by '%s' to '%s'", x, count);
+        emit UpdatedCount(count);
     }
 
     function getCount() public view returns (uint256) {

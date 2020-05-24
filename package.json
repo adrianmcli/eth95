@@ -43,6 +43,7 @@
     "@types/react-modal": "^3.10.5",
     "@types/styled-components": "^5.1.0",
     "@types/ws": "^7.2.4",
+    "abi-decoder": "^2.3.0",
     "ethers": "^4.0.47",
     "get-port": "^5.1.1",
     "husky": "^4.2.5",

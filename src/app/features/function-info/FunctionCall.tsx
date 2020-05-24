@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Fieldset, Button } from "react95";
+import abiDecoder from "abi-decoder";
+
 import ContractAddress from "../../containers/ContractAddress";
 import Contracts from "../../containers/Contracts";
 import Input from "../common/Input";
@@ -56,11 +58,7 @@ const FunctionForm = ({ fn }) => {
     for (let i = 0; i < fn.inputs.length; i++) {
       args.push(formState[i]);
     }
-    const instance = new ethers.Contract(
-      address,
-      selectedContract.abi,
-      signer,
-    );
+    const instance = new ethers.Contract(address, selectedContract.abi, signer);
 
     if (fn.stateMutability !== "view") {
       // mutating fn; just return hash
@@ -68,6 +66,20 @@ const FunctionForm = ({ fn }) => {
       addLogItem(`tx.hash: ${tx.hash}`);
       await tx.wait();
       addLogItem(`tx mined (${tx.hash})`);
+
+      // log out any events from tx
+      const receipt = await signer.provider.getTransactionReceipt(tx.hash);
+      abiDecoder.addABI(selectedContract.abi);
+      const decoded = abiDecoder.decodeLogs(receipt.logs);
+      decoded.forEach((evt) => {
+        const values = evt.events.map((x) => {
+          if (x.type === "bytes32") {
+            return ethers.utils.parseBytes32String(x.value);
+          }
+          return x.value;
+        });
+        addLogItem(`Event: ${evt.name}(${values})`);
+      });
     } else {
       // view fn; return value (and call toString on it)
       const result = await instance[fn.name](...args);
