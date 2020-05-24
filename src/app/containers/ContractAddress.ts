@@ -4,7 +4,7 @@ import Contracts from "./Contracts";
 import Network from "./Network";
 
 export function useContractAddress() {
-  const [address, setAddress] = useState<string | null>(null);
+  const [customAddress, setCustomAddress] = useState<string | null>(null);
   const [addressFromArtifact, setAddressFromArtifact] = useState<string | null>(
     null,
   );
@@ -14,6 +14,7 @@ export function useContractAddress() {
 
   useEffect(() => {
     if (
+      network &&
       selectedContract?.artifact?.networks &&
       selectedContract.artifact.networks[network.chainId]
     ) {
@@ -27,6 +28,8 @@ export function useContractAddress() {
 
   return {
     addressFromArtifact,
+    customAddress,
+    setCustomAddress,
   };
 }
 

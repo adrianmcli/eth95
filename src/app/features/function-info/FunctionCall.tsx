@@ -6,6 +6,7 @@ import Contracts from "../../containers/Contracts";
 import Input from "../common/Input";
 import { ethers } from "ethers";
 import Signers from "../../containers/Signers";
+import OutputLog from "../../containers/OutputLog";
 
 const Container = styled(Fieldset)`
   flex-grow: 1;
@@ -25,6 +26,16 @@ const Content = styled.div`
 `;
 
 const FunctionForm = ({ fn }) => {
+  const { addLogItem } = OutputLog.useContainer();
+  const { selectedContract } = Contracts.useContainer();
+  const { addressFromArtifact } = ContractAddress.useContainer();
+  const { signer } = Signers.useContainer();
+  const [formState, setFormState] = useState({});
+
+  useEffect(() => {
+    setFormState({});
+  }, [fn]);
+
   if (!fn) {
     return (
       <Container label="Call function">
@@ -32,11 +43,6 @@ const FunctionForm = ({ fn }) => {
       </Container>
     );
   }
-
-  const { selectedContract } = Contracts.useContainer();
-  const { addressFromArtifact } = ContractAddress.useContainer();
-  const { signer } = Signers.useContainer();
-  const [formState, setFormState] = useState({});
 
   const handleInputChange = (idx, value) => {
     setFormState((prevFormState) => ({
@@ -59,12 +65,15 @@ const FunctionForm = ({ fn }) => {
     if (fn.stateMutability !== "view") {
       // mutating fn; just return hash
       const tx = await instance[fn.name](...args);
-      console.log("tx", tx.hash);
+      addLogItem(`tx.hash: ${tx.hash}`);
+      await tx.wait();
+      addLogItem(`tx mined (${tx.hash})`);
     } else {
       // view fn; return value (and call toString on it)
       const result = await instance[fn.name](...args);
       console.log("result", result.toString());
       console.log("typeof", typeof result);
+      addLogItem(result.toString());
     }
   };
 

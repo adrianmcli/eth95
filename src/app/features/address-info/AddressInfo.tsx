@@ -5,7 +5,7 @@ import Input from "../common/Input";
 import Network from "../../containers/Network";
 import ContractAddress from "../../containers/ContractAddress";
 
-const containerWidth = 450
+const containerWidth = 450;
 const Container = styled(Fieldset)`
   display: flex;
   height: 100%;
@@ -27,7 +27,6 @@ const AddressInfo = ({ contract }) => {
   const [inputText, setInputText] = useState("");
   const { network } = Network.useContainer();
   const { addressFromArtifact } = ContractAddress.useContainer();
-  console.log(addressFromArtifact);
 
   return (
     <Container label="Contract address">
