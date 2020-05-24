@@ -13,7 +13,10 @@ export function useContractAddress() {
   const { network } = Network.useContainer();
 
   useEffect(() => {
-    if (selectedContract?.artifact?.networks[network.chainId]) {
+    if (
+      selectedContract?.artifact?.networks &&
+      selectedContract.artifact.networks[network.chainId]
+    ) {
       const { networks } = selectedContract.artifact;
       const { address } = networks[network.chainId];
       setAddressFromArtifact(address);
