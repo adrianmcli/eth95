@@ -11,6 +11,7 @@ import Layout from "./features/common/Layout";
 import Sidebar from "./features/sidebar/Sidebar";
 import Main from "./features/main/Main";
 import Network from "./containers/Network";
+import ContractAddress from "./containers/ContractAddress";
 
 Modal.setAppElement("#root");
 
@@ -21,10 +22,12 @@ const App = () => (
         <Signers.Provider>
           <Network.Provider>
             <Address.Provider>
-              <Layout>
-                <Sidebar />
-                <Main />
-              </Layout>
+              <ContractAddress.Provider>
+                <Layout>
+                  <Sidebar />
+                  <Main />
+                </Layout>
+              </ContractAddress.Provider>
             </Address.Provider>
           </Network.Provider>
         </Signers.Provider>

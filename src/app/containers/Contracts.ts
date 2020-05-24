@@ -1,7 +1,7 @@
 import { createContainer } from "unstated-next";
 import { useState } from "react";
 
-interface Contract {
+export interface Contract {
   abi: any[];
   name: string;
   artifact?: any;

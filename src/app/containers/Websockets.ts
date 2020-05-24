@@ -3,11 +3,7 @@ import { useState, useEffect } from "react";
 import Contracts from "./Contracts";
 
 function useWebsockets() {
-  const {
-    addByArtifact,
-    upsertByPath,
-    removeByPath,
-  } = Contracts.useContainer();
+  const { upsertByPath, removeByPath } = Contracts.useContainer();
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   const setup = () => {
