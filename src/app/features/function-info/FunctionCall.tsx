@@ -28,7 +28,7 @@ const Content = styled.div`
 const FunctionForm = ({ fn }) => {
   const { addLogItem } = OutputLog.useContainer();
   const { selectedContract } = Contracts.useContainer();
-  const { addressFromArtifact } = ContractAddress.useContainer();
+  const { address } = ContractAddress.useContainer();
   const { signer } = Signers.useContainer();
   const [formState, setFormState] = useState({});
 
@@ -57,7 +57,7 @@ const FunctionForm = ({ fn }) => {
       args.push(formState[i]);
     }
     const instance = new ethers.Contract(
-      addressFromArtifact,
+      address,
       selectedContract.abi,
       signer,
     );

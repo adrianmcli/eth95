@@ -6,7 +6,6 @@ import OutputLogContainer from "../../containers/OutputLog";
 // const containerWidth = 450;
 const Container = styled(Fieldset)`
   display: flex;
-  height: 100%;
   flex-grow: 1;
   position: relative;
   margin-left: 16px;

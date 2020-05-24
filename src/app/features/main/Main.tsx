@@ -39,15 +39,6 @@ const FooterPanel = styled(Panel)`
 
 const Main = () => {
   const { selectedContract: contract } = Contracts.useContainer();
-  if (!contract) {
-    return (
-      <Container>
-        <ContentFrame>
-          <div>Please select a contract.</div>
-        </ContentFrame>
-      </Container>
-    );
-  }
   return (
     <Container>
       <ContentFrame label={contract && contract.name}>
@@ -58,7 +49,7 @@ const Main = () => {
           </TopContainer>
           <FunctionInfo contract={contract} />
           <FooterPanel variant="well">
-            {`Path: ${contract.path}` || "No path specified for this contract"}
+            {`Path: ${contract?.path}` || "No path specified for this contract"}
           </FooterPanel>
         </Content>
       </ContentFrame>

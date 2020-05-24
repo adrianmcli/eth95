@@ -8,7 +8,6 @@ import ContractAddress from "../../containers/ContractAddress";
 const containerWidth = 450;
 const Container = styled(Fieldset)`
   display: flex;
-  height: 100%;
   width: ${containerWidth}px;
   min-width: ${containerWidth}px;
 `;
@@ -21,19 +20,27 @@ const AddressPanel = styled(Panel)`
   white-space: nowrap;
   overflow: hidden;
   line-height: 20px;
+  margin-bottom: 1rem;
 `;
 
 const AddressInfo = ({ contract }) => {
   const [inputText, setInputText] = useState("");
   const { network } = Network.useContainer();
-  const { addressFromArtifact } = ContractAddress.useContainer();
+  const {
+    addressFromArtifact,
+    setCustomAddress,
+    address,
+  } = ContractAddress.useContainer();
 
   return (
     <Container label="Contract address">
       <Input
         placeholder="Paste the deployed address here..."
         value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
+        onChange={(e) => {
+          setInputText(e.target.value);
+          setCustomAddress(e.target.value);
+        }}
       />
 
       <div style={{ marginTop: `1rem` }}>
@@ -43,6 +50,10 @@ const AddressInfo = ({ contract }) => {
         </div>
         <AddressPanel variant="well">
           {addressFromArtifact || "No address found in artifact"}
+        </AddressPanel>
+        <div>Selected address:</div>
+        <AddressPanel variant="well">
+          {address || "No valid address, function call will not work"}
         </AddressPanel>
       </div>
     </Container>

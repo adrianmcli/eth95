@@ -14,8 +14,8 @@ const Container = styled.div`
 
 const FunctionInfo = ({ contract }) => {
   const [selectedIdx, setSelectedIdx] = useState(null);
-  const fns = contract.abi.filter((x) => x.type === "function");
-  const selectedFn = fns[selectedIdx];
+  const fns = contract ? contract.abi.filter((x) => x.type === "function") : [];
+  const selectedFn = fns ? fns[selectedIdx] : null;
 
   useEffect(() => {
     setSelectedIdx(null);

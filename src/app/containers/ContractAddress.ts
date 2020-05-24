@@ -26,10 +26,14 @@ export function useContractAddress() {
     }
   }, [selectedContract, selectedContract?.artifact, network]);
 
+  const customAddressValid = customAddress && customAddress.length === 42;
+  const address = customAddressValid ? customAddress : addressFromArtifact;
+
   return {
     addressFromArtifact,
     customAddress,
     setCustomAddress,
+    address,
   };
 }
 
