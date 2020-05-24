@@ -65,7 +65,7 @@ const FunctionForm = ({ fn }) => {
       const tx = await instance[fn.name](...args);
       addLogItem(`tx.hash: ${tx.hash}`);
       await tx.wait();
-      addLogItem(`tx mined (${tx.hash})`);
+      addLogItem(`tx mined: ${tx.hash}`);
 
       // log out any events from tx
       const receipt = await signer.provider.getTransactionReceipt(tx.hash);
@@ -83,8 +83,6 @@ const FunctionForm = ({ fn }) => {
     } else {
       // view fn; return value (and call toString on it)
       const result = await instance[fn.name](...args);
-      console.log("result", result.toString());
-      console.log("typeof", typeof result);
       addLogItem(result.toString());
     }
   };
