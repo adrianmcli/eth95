@@ -20,7 +20,6 @@ const Content = styled.div`
   width: 100%;
   display: grid;
   grid-template-rows: 1fr 1fr 28px;
-  // grid-template-rows: 50% 50% 28px;
   grid-gap: 16px;
 `;
 

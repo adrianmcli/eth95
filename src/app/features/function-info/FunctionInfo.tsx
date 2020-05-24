@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import FunctionDetails from "./FunctionDetails";
-import FunctionForm from "./FunctionForm";
+import FunctionCall from "./FunctionCall";
 import FunctionList from "./FunctionList";
 
 const Container = styled.div`
@@ -29,7 +29,7 @@ const FunctionInfo = ({ contract }) => {
         fns={fns}
       />
       <FunctionDetails fn={selectedFn} />
-      <FunctionForm />
+      <FunctionCall fn={selectedFn} />
     </Container>
   );
 };

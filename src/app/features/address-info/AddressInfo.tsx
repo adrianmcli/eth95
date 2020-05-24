@@ -5,17 +5,19 @@ import Input from "../common/Input";
 import Network from "../../containers/Network";
 import ContractAddress from "../../containers/ContractAddress";
 
+const containerWidth = 450
 const Container = styled(Fieldset)`
   display: flex;
   height: 100%;
-  width: 614;
-  min-width: 614px;
+  width: ${containerWidth}px;
+  min-width: ${containerWidth}px;
 `;
 
 const AddressPanel = styled(Panel)`
   padding: 0.1rem 0.25rem;
   width: 100%;
   font-size: 14px;
+  font-family: monospace;
   white-space: nowrap;
   overflow: hidden;
   line-height: 20px;
