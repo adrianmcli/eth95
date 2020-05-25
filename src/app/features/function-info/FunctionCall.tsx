@@ -87,6 +87,17 @@ const FunctionForm = ({ fn }) => {
     }
   };
 
+  const encodeFunction = async () => {
+    let args = [];
+    for (let i = 0; i < fn.inputs.length; i++) {
+      args.push(formState[i]);
+    }
+
+    const types = fn.inputs.map((x) => x.type);
+    const callData = ethers.utils.defaultAbiCoder.encode(types, args);
+    addLogItem(`Encoded data: ${callData}`);
+  };
+
   return (
     <Container label="Call function">
       <Content>
@@ -101,6 +112,7 @@ const FunctionForm = ({ fn }) => {
           </div>
         ))}
         <Button onClick={callFunction}>Submit</Button>
+        <Button onClick={encodeFunction}>Encode</Button>
       </Content>
     </Container>
   );
