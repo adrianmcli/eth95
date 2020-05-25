@@ -14,8 +14,17 @@ const Container = styled.div`
 
 const FunctionInfo = ({ contract }) => {
   const [selectedIdx, setSelectedIdx] = useState(null);
-  const fns = contract ? contract.abi.filter((x) => x.type === "function") : [];
-  const selectedFn = fns ? fns[selectedIdx] : null;
+
+  let fns, selectedFn;
+  if (contract) {
+    fns = contract.abi
+      .filter((x) => x.type === "function")
+      .sort((a, b) => a.name.localeCompare(b.name));
+    selectedFn = fns[selectedIdx];
+  } else {
+    fns = [];
+    selectedFn = null;
+  }
 
   useEffect(() => {
     setSelectedIdx(null);
