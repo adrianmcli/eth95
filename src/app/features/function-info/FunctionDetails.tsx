@@ -60,17 +60,8 @@ const FunctionInfo = ({ fn }) => {
           <b>Name:</b> <Name title={fn.name}>{fn.name}</Name>
         </DataItem>
         <DataItem>
-          <b>Constant:</b> <FloatRight>{fn?.constant?.toString()}</FloatRight>
-        </DataItem>
-        <DataItem>
-          <b>Payable:</b> <FloatRight>{fn?.payable?.toString()}</FloatRight>
-        </DataItem>
-        <DataItem>
           <b>State Mutability:</b>{" "}
           <FloatRight>{fn?.stateMutability?.toString()}</FloatRight>
-        </DataItem>
-        <DataItem>
-          <b>Arity:</b> <FloatRight>{fn.inputs.length}</FloatRight>
         </DataItem>
         {fn.inputs?.length > 0 && (
           <>
