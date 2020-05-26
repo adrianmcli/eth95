@@ -27,7 +27,7 @@ const customStyles = {
   },
 };
 
-const ProxyCallButton = ({ args, types, inputs }) => {
+const ProxyCallButton = ({ args, types, inputs, opts }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -47,6 +47,7 @@ const ProxyCallButton = ({ args, types, inputs }) => {
           args={args}
           types={types}
           inputs={inputs}
+          opts={opts}
         />
       </Modal>
     </>

@@ -30,7 +30,7 @@ const FooterPanel = styled(Panel)`
   margin-bottom: 1rem;
 `;
 
-const ProxyCallModal = ({ closeModal, args, types, inputs }) => {
+const ProxyCallModal = ({ closeModal, args, types, inputs, opts }) => {
   const { signer } = Signers.useContainer();
   const { proxyAddress } = ProxyAddress.useContainer();
   const { addLogItem } = OutputLog.useContainer();
@@ -68,7 +68,7 @@ const ProxyCallModal = ({ closeModal, args, types, inputs }) => {
       signer,
     );
 
-    const tx = await instance.execute(targetAddress, encoded);
+    const tx = await instance.execute(targetAddress, encoded, opts);
     addLogItem(`tx.hash: ${tx.hash}`);
     await tx.wait();
     addLogItem(`tx mined: ${tx.hash}`);

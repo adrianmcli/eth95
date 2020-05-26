@@ -36,6 +36,10 @@ const FunctionForm = ({ fn }) => {
   const { signer } = Signers.useContainer();
   const [formState, setFormState] = useState({});
 
+  const isPayable = fn?.stateMutability === "payable";
+  const [ethToSend, setEthToSend] = useState("");
+  const [gasLimit, setGasLimit] = useState("");
+
   useEffect(() => {
     setFormState({});
   }, [fn]);
@@ -55,6 +59,11 @@ const FunctionForm = ({ fn }) => {
     }));
   };
 
+  const opts = {
+    value: ethToSend !== "" && ethers.utils.parseEther(ethToSend),
+    gasLimit: gasLimit !== "" && parseInt(gasLimit),
+  };
+
   const callFunction = async () => {
     let args = [];
     for (let i = 0; i < fn.inputs.length; i++) {
@@ -64,7 +73,7 @@ const FunctionForm = ({ fn }) => {
 
     if (fn.stateMutability !== "view") {
       // mutating fn; just return hash
-      const tx = await instance[fn.name](...args);
+      const tx = await instance[fn.name](...args, opts);
       addLogItem(`tx.hash: ${tx.hash}`);
       await tx.wait();
       addLogItem(`tx mined: ${tx.hash}`);
@@ -118,8 +127,35 @@ const FunctionForm = ({ fn }) => {
             />
           </div>
         ))}
+        {isPayable && (
+          <>
+            <div>ETH to send:</div>
+            <Input
+              type="number"
+              placeholder="in units of Ethers, not Wei"
+              value={ethToSend}
+              onChange={(e) => setEthToSend(e.target.value)}
+              style={{ marginBottom: `1rem` }}
+            />
+          </>
+        )}
+
+        <div>Gas limit:</div>
+        <Input
+          type="number"
+          placeholder="leave blank to use default"
+          value={gasLimit}
+          onChange={(e) => setGasLimit(e.target.value)}
+          style={{ marginBottom: `1rem` }}
+        />
+
         <Button onClick={handleSubmit}>Submit</Button>
-        <ProxyCallButton args={args} types={types} inputs={fn.inputs} />
+        <ProxyCallButton
+          args={args}
+          types={types}
+          inputs={fn.inputs}
+          opts={opts}
+        />
       </Content>
     </Container>
   );
