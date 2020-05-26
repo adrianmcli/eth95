@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Fieldset } from "react95";
+import { Fieldset, Button } from "react95";
 import OutputLogContainer from "../../containers/OutputLog";
 
 // const containerWidth = 450;
@@ -30,8 +30,14 @@ const LogItem = styled.div`
   overflow-wrap: anywhere;
 `;
 
+const ClearButton = styled(Button)`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+`;
+
 const OutputLog = () => {
-  const { logItems } = OutputLogContainer.useContainer();
+  const { logItems, clear } = OutputLogContainer.useContainer();
   return (
     <Container label="Log">
       <Content>
@@ -39,6 +45,7 @@ const OutputLog = () => {
           <LogItem key={i}>{logItem}</LogItem>
         ))}
       </Content>
+      <ClearButton onClick={clear}>Clear</ClearButton>
     </Container>
   );
 };

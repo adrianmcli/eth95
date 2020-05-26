@@ -10,9 +10,12 @@ export function useOutputLog() {
     setLogItems((prev) => [logStr, ...prev]);
   };
 
+  const clear = () => setLogItems([]);
+
   return {
     logItems,
     addLogItem,
+    clear,
   };
 }
 
