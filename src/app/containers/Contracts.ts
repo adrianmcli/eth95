@@ -15,19 +15,13 @@ export function useContracts() {
   const selectedContract = selectedIdx === null ? null : contracts[selectedIdx];
 
   const shiftUp = () => {
-    setSelectedIdx((prev) => {
-      if (prev !== null) {
-        return prev === 0 ? 0 : prev - 1;
-      }
-    });
+    setSelectedIdx((prev) => (prev === null || prev === 0 ? prev : prev - 1));
   };
 
   const shiftDown = () => {
-    setSelectedIdx((prev) => {
-      if (prev !== null) {
-        return prev === contracts.length - 1 ? prev : prev + 1;
-      }
-    });
+    setSelectedIdx((prev) =>
+      prev === null || prev === contracts.length - 1 ? prev : prev + 1,
+    );
   };
 
   const addContract = (contract: Contract) =>
