@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Fieldset, Panel } from "react95";
 
 import Contracts from "../../containers/Contracts";
-import AddressInfo from "../address-info/AddressInfo";
 import FunctionInfo from "../function-info/FunctionInfo";
 import OutputLog from "../output-log/OutputLog";
+import Options from "../options/Options";
 
 const Container = styled.div`
   flex-grow: 1;
@@ -44,7 +44,7 @@ const Main = () => {
       <ContentFrame label={contract && contract.name}>
         <Content>
           <TopContainer>
-            <AddressInfo contract={contract} />
+            <Options />
             <OutputLog />
           </TopContainer>
           <FunctionInfo contract={contract} />

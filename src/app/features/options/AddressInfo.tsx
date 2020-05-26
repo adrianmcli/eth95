@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Fieldset, Panel } from "react95";
+import { TabBody, Panel, Divider } from "react95";
 import Input from "../common/Input";
 import Network from "../../containers/Network";
 import ContractAddress from "../../containers/ContractAddress";
 
-const containerWidth = 450;
-const Container = styled(Fieldset)`
+const Container = styled(TabBody)`
   display: flex;
-  width: ${containerWidth}px;
-  min-width: ${containerWidth}px;
+  flex-direction: column;
 `;
 
 const AddressPanel = styled(Panel)`
@@ -20,10 +18,10 @@ const AddressPanel = styled(Panel)`
   white-space: nowrap;
   overflow: hidden;
   line-height: 20px;
-  margin-bottom: 1rem;
+  // margin-top: 1rem;
 `;
 
-const AddressInfo = ({ contract }) => {
+const AddressInfo = ({ show }) => {
   const [inputText, setInputText] = useState("");
   const { network } = Network.useContainer();
   const {
@@ -33,9 +31,13 @@ const AddressInfo = ({ contract }) => {
   } = ContractAddress.useContainer();
 
   return (
-    <Container label="Contract address">
+    <Container
+      label="Contract address"
+      style={{ display: show ? "flex" : "none" }}
+    >
+      <div>Custom:</div>
       <Input
-        placeholder="Paste the deployed address here..."
+        placeholder="Paste the deployed contract address here..."
         value={inputText}
         onChange={(e) => {
           setInputText(e.target.value);
@@ -43,17 +45,20 @@ const AddressInfo = ({ contract }) => {
         }}
       />
 
-      <div style={{ marginTop: `1rem` }}>
-        <div>
+      <div>
+        <div style={{ marginTop: `1rem` }}>
           From artifact @ network {network?.name}{" "}
           {network && `(${network?.chainId})`}:
         </div>
         <AddressPanel variant="well">
           {addressFromArtifact || "No address found in artifact"}
         </AddressPanel>
-        <div>Selected address:</div>
+        <Divider style={{ marginTop: `1rem` }} />
+        <div style={{ marginTop: `1rem` }}>
+          <strong>Selected contract address:</strong>
+        </div>
         <AddressPanel variant="well">
-          {address || "No valid address, function call will not work"}
+          {address || "No valid address, function call will fail"}
         </AddressPanel>
       </div>
     </Container>

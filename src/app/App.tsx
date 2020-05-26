@@ -13,6 +13,7 @@ import Main from "./features/main/Main";
 import Network from "./containers/Network";
 import ContractAddress from "./containers/ContractAddress";
 import OutputLog from "./containers/OutputLog";
+import ProxyAddress from "./containers/ProxyAddress";
 
 Modal.setAppElement("#root");
 
@@ -25,10 +26,12 @@ const App = () => (
             <Network.Provider>
               <Address.Provider>
                 <ContractAddress.Provider>
-                  <Layout>
-                    <Sidebar />
-                    <Main />
-                  </Layout>
+                  <ProxyAddress.Provider>
+                    <Layout>
+                      <Sidebar />
+                      <Main />
+                    </Layout>
+                  </ProxyAddress.Provider>
                 </ContractAddress.Provider>
               </Address.Provider>
             </Network.Provider>
