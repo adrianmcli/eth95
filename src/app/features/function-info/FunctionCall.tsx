@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { ethers } from "ethers";
 import styled from "styled-components";
 import { Fieldset, Button } from "react95";
 import abiDecoder from "abi-decoder";
 
 import ContractAddress from "../../containers/ContractAddress";
 import Contracts from "../../containers/Contracts";
-import Input from "../common/Input";
-import { ethers } from "ethers";
 import Signers from "../../containers/Signers";
 import OutputLog from "../../containers/OutputLog";
+
+import Input from "../common/Input";
+import ProxyCallButton from "./ProxyCallButton";
 
 const Container = styled(Fieldset)`
   flex-grow: 1;
@@ -113,6 +115,7 @@ const FunctionForm = ({ fn }) => {
         ))}
         <Button onClick={callFunction}>Submit</Button>
         <Button onClick={encodeFunction}>Encode</Button>
+        <ProxyCallButton />
       </Content>
     </Container>
   );
