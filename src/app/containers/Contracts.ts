@@ -14,6 +14,16 @@ export function useContracts() {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const selectedContract = selectedIdx === null ? null : contracts[selectedIdx];
 
+  const shiftUp = () => {
+    setSelectedIdx((prev) => (selectedIdx === 0 ? 0 : prev - 1));
+  };
+
+  const shiftDown = () => {
+    setSelectedIdx((prev) =>
+      selectedIdx === contracts.length - 1 ? prev : prev + 1,
+    );
+  };
+
   const addContract = (contract: Contract) =>
     setContracts((prevContracts) => {
       const newContracts = [...prevContracts, contract];
@@ -89,6 +99,8 @@ export function useContracts() {
     selectedIdx,
     selectedContract,
     setSelectedIdx,
+    shiftUp,
+    shiftDown,
   };
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 interface IItemProps {
@@ -23,12 +23,22 @@ interface IProps {
 const FunctionItem = ({ fn, isActive, onClick }: IProps) => {
   const arity = fn.inputs?.length || 0;
   const label = `${fn.name}(${arity})`;
+
+  // ensure an active item is always in view
+  const ref = React.createRef<HTMLDivElement>();
+  useEffect(() => {
+    if (isActive) {
+      ref.current.scrollIntoView({ block: "nearest" });
+    }
+  }, [isActive]);
+
   return (
     <Item
       isActive={isActive}
       onClick={onClick}
       className="function-list-item"
       title={label}
+      ref={ref}
     >
       {label}
     </Item>

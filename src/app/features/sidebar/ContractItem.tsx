@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Contracts from "../../containers/Contracts";
 
@@ -23,11 +23,20 @@ const ContractItem = ({ name, idx = 0 }: { name: string; idx: number }) => {
     setSelectedIdx(isActive ? null : idx);
   };
 
+  // ensure an active item is always in view
+  const ref = React.createRef<HTMLDivElement>();
+  useEffect(() => {
+    if (isActive) {
+      ref.current.scrollIntoView({ block: "nearest" });
+    }
+  }, [isActive]);
+
   return (
     <Item
       isActive={isActive}
       onClick={handleClick}
       className="contract-list-item"
+      ref={ref}
     >
       {name}
     </Item>
