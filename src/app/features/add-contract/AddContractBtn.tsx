@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components"
+import styled from "styled-components";
 import Modal from "react-modal";
 import { Button } from "react95";
 
@@ -12,6 +12,7 @@ const customStyles = {
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 1,
   },
   content: {
     top: "50%",
@@ -31,7 +32,7 @@ const Container = styled.div`
   width: calc(100% - 4px);
   position: absolute;
   bottom: 0;
-`
+`;
 
 const AddContractBtn = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
