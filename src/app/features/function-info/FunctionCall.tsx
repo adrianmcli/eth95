@@ -69,11 +69,18 @@ const FunctionForm = ({ fn }) => {
     for (let i = 0; i < fn.inputs.length; i++) {
       args.push(formState[i]);
     }
+
+    // handle array types
+    const processedArgs = args.map((arg, idx) => {
+      const type = types[idx];
+      return type.slice(-2) === "[]" ? JSON.parse(arg) : arg;
+    });
+
     const instance = new ethers.Contract(address, selectedContract.abi, signer);
 
     if (fn.stateMutability !== "view") {
       // mutating fn; just return hash
-      const tx = await instance[fn.name](...args, opts);
+      const tx = await instance[fn.name](...processedArgs, opts);
       addLogItem(`tx.hash: ${tx.hash}`);
       await tx.wait();
       addLogItem(`tx mined: ${tx.hash}`);
@@ -93,7 +100,7 @@ const FunctionForm = ({ fn }) => {
       });
     } else {
       // view fn; return value (and call toString on it)
-      const result = await instance[fn.name](...args);
+      const result = await instance[fn.name](...processedArgs);
       addLogItem(result.toString());
     }
   };
