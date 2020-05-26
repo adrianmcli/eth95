@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components"
 import Modal from "react-modal";
 import { Button } from "react95";
 
@@ -28,16 +27,14 @@ const customStyles = {
   },
 };
 
-const ProxyCallButton = () => {
+const ProxyCallButton = ({ args, types, inputs }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
-      <Button onClick={openModal}>
-        Submit via Proxy
-      </Button>
+      <Button onClick={openModal}>Encode</Button>
 
       <Modal
         isOpen={isModalOpen}
@@ -45,7 +42,12 @@ const ProxyCallButton = () => {
         style={customStyles}
         shouldCloseOnOverlayClick
       >
-        <ProxyCallModal closeModal={closeModal} />
+        <ProxyCallModal
+          closeModal={closeModal}
+          args={args}
+          types={types}
+          inputs={inputs}
+        />
       </Modal>
     </>
   );

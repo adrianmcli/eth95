@@ -89,16 +89,21 @@ const FunctionForm = ({ fn }) => {
     }
   };
 
-  const encodeFunction = async () => {
-    let args = [];
-    for (let i = 0; i < fn.inputs.length; i++) {
-      args.push(formState[i]);
+  const handleSubmit = async () => {
+    try {
+      await callFunction();
+    } catch (error) {
+      console.error(error);
+      addLogItem(`Error: ${error.message}`);
     }
-
-    const types = fn.inputs.map((x) => x.type);
-    const callData = ethers.utils.defaultAbiCoder.encode(types, args);
-    addLogItem(`Encoded data: ${callData}`);
   };
+
+  // grab args and types for proxy call and encode
+  let args = [];
+  for (let i = 0; i < fn.inputs.length; i++) {
+    args.push(formState[i]);
+  }
+  const types = fn.inputs.map((x) => x.type);
 
   return (
     <Container label="Call function">
@@ -113,9 +118,8 @@ const FunctionForm = ({ fn }) => {
             />
           </div>
         ))}
-        <Button onClick={callFunction}>Submit</Button>
-        <Button onClick={encodeFunction}>Encode</Button>
-        <ProxyCallButton />
+        <Button onClick={handleSubmit}>Submit</Button>
+        <ProxyCallButton args={args} types={types} inputs={fn.inputs} />
       </Content>
     </Container>
   );
