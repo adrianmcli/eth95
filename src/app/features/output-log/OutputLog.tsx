@@ -26,13 +26,17 @@ const Content = styled.div`
   font-size: 12px;
 `;
 
+const LogItem = styled.div`
+  overflow-wrap: anywhere;
+`;
+
 const OutputLog = () => {
   const { logItems } = OutputLogContainer.useContainer();
   return (
     <Container label="Log">
       <Content>
         {logItems.map((logItem, i) => (
-          <div key={i}>{logItem}</div>
+          <LogItem key={i}>{logItem}</LogItem>
         ))}
       </Content>
     </Container>
