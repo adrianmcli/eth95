@@ -22,8 +22,11 @@ jobs:
             libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
             fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
       - run:
-          name: Install Dependencies
+          name: Install dependencies
           command: yarn install --frozen-lockfile
+      - run:
+          name: Install test project dependencies
+          command: (cd test/projects/truffle && npm install)
       - run:
           name: Run tests
           command: yarn test
