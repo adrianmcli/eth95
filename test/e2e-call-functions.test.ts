@@ -3,7 +3,7 @@ import { spawn, ChildProcess, execSync } from "child_process";
 import getPort from "get-port";
 import portUsed from "tcp-port-used";
 
-jest.setTimeout(20000);
+jest.setTimeout(100000);
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
