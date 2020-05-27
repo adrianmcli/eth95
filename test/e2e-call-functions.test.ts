@@ -111,7 +111,7 @@ describe("e2e: call functions", () => {
 
     test("getCount() function info is correct", async () => {
       const functionLabels = await page.$$(`.function-list-item`);
-      await functionLabels[0].click();
+      await functionLabels[0].click(); // select the getCount function
 
       const functionName = await page.$eval(
         ".function-details-name",
@@ -143,6 +143,43 @@ describe("e2e: call functions", () => {
         (el) => (el as HTMLElement).innerText,
       );
       expect(logText.slice(-1)).toBe("0");
+    });
+
+    test("increment by 5", async () => {
+      const functionLabels = await page.$$(`.function-list-item`);
+      await functionLabels[2].click();
+
+      const formItems = await page.$$(`.function-form-item input`);
+      await formItems[0].focus();
+      await page.keyboard.type(`5`);
+
+      // submit function call to increment by 5
+      await page.$eval(".function-submit-btn", (btn) =>
+        (btn as HTMLElement).click(),
+      );
+
+      // wait for log to populate
+      await page.waitForFunction(
+        `document.getElementsByClassName("output-log-item").length === 4`,
+      );
+
+      // submit call to getCount
+      await functionLabels[0].click();
+      await page.$eval(".function-submit-btn", (btn) =>
+        (btn as HTMLElement).click(),
+      );
+
+      // wait for log to populate
+      await page.waitForFunction(
+        `document.getElementsByClassName("output-log-item").length === 5`,
+      );
+
+      // check latest log item
+      const logItems = await page.$$(".output-log-item");
+      const logText = await logItems[0].evaluate(
+        (el) => (el as HTMLElement).innerText,
+      );
+      expect(logText.slice(-1)).toBe("5");
     });
   });
 });

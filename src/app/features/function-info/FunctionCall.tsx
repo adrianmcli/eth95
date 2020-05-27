@@ -59,10 +59,9 @@ const FunctionForm = ({ fn }) => {
     }));
   };
 
-  const opts = {
-    value: ethToSend !== "" && ethers.utils.parseEther(ethToSend),
-    gasLimit: gasLimit !== "" && parseInt(gasLimit),
-  };
+  const opts: any = {};
+  if (ethToSend !== "") opts.value = ethers.utils.parseEther(ethToSend);
+  if (gasLimit !== "") opts.gasLimit = parseInt(gasLimit);
 
   const callFunction = async () => {
     let args = [];
@@ -73,13 +72,17 @@ const FunctionForm = ({ fn }) => {
     // handle array types
     const processedArgs = args.map((arg, idx) => {
       const type = types[idx];
-      return type.slice(-2) === "[]" ? JSON.parse(arg) : arg;
+      if (type.substring(0, 4) === "uint") return parseInt(arg);
+      if (type.slice(-2) === "[]") return JSON.parse(arg);
+      return arg;
     });
 
     const instance = new ethers.Contract(address, selectedContract.abi, signer);
 
     if (fn.stateMutability !== "view") {
       // mutating fn; just return hash
+      console.log(args);
+      console.log(processedArgs);
       const tx = await instance[fn.name](...processedArgs, opts);
       addLogItem(`tx.hash: ${tx.hash}`);
       await tx.wait();
@@ -131,6 +134,7 @@ const FunctionForm = ({ fn }) => {
               placeholder={input.type}
               value={formState[idx] || ""}
               onChange={(e) => handleInputChange(idx, e.target.value)}
+              className="function-form-item"
             />
           </div>
         ))}
