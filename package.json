@@ -10,7 +10,7 @@
     "build": "rm -rf dist && yarn tsc && yarn bundle",
     "tsc": "tsc -p . && tsc -p ./src/app",
     "bundle": "parcel build src/app/index.html -d dist/app",
-    "test": "jest"
+    "test": "jest --maxWorkers=2"
   },
   "husky": {
     "hooks": {
