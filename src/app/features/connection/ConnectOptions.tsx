@@ -25,8 +25,9 @@ const ConnectOptions = () => {
           options={options}
           onChange={onChange}
           width="100%"
+          className="connect-options"
         />
-
+        
         <ConnectStatus />
 
         {connection === Method.Localhost && <ByLocalhost />}

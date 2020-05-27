@@ -49,6 +49,11 @@ describe("e2e: call functions", () => {
     // 4. launch headless browser w/ puppeteer
     browser = await puppeteer.launch();
     page = await browser.newPage();
+    await page.setViewport({
+      width: 1920,
+      height: 1080,
+      deviceScaleFactor: 1,
+    });
     await page.goto(`http://localhost:${eth95Port}`, {
       waitUntil: "networkidle2",
     });
@@ -66,7 +71,9 @@ describe("e2e: call functions", () => {
   // 8. submit tx
   // 9. observe log output
 
-  test("smoke test", () => {
+  test("smoke test", async () => {
+    const x = await page.select(".connect-options select", "Custom");
+    await page.screenshot({ path: "./test.png" });
     expect(1).toBe(1);
   });
 });
