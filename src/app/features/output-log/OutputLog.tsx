@@ -40,9 +40,11 @@ const OutputLog = () => {
   const { logItems, clear } = OutputLogContainer.useContainer();
   return (
     <Container label="Log">
-      <Content>
+      <Content className="output-log">
         {logItems.map((logItem, i) => (
-          <LogItem key={i}>{logItem}</LogItem>
+          <LogItem key={i} className="output-log-item">
+            {logItem}
+          </LogItem>
         ))}
       </Content>
       <ClearButton onClick={clear}>Clear</ClearButton>

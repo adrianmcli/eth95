@@ -76,12 +76,6 @@ describe("e2e: call functions", () => {
     ganacheProcess.kill("SIGINT");
   });
 
-  // 5. select contract
-  // 6. select function
-  // 7. fill out form
-  // 8. submit tx
-  // 9. observe log output
-
   test("check connection to ganache node", async () => {
     const providerStatus = await page.$eval(
       `.status-provider`,
@@ -94,5 +88,61 @@ describe("e2e: call functions", () => {
 
     expect(providerStatus.trim()).toBe("Connected");
     expect(signerStatus.trim()).toBe("Connected");
+  });
+
+  describe("Counter", () => {
+    test("contract appears", async () => {
+      const contractItems = await page.$$(`.contract-list-item`);
+      const contractLabel = await contractItems[0].evaluate(
+        (el) => el.innerHTML,
+      );
+
+      expect(contractLabel).toBe("Counter");
+    });
+
+    test("getCount() function appears", async () => {
+      const contractItems = await page.$$(`.contract-list-item`);
+      await contractItems[0].click();
+      const functionLabels = await page.$$(`.function-list-item`);
+      const fnLabel = await functionLabels[0].evaluate((el) => el.innerHTML);
+
+      expect(fnLabel).toBe("getCount(0)");
+    });
+
+    test("getCount() function info is correct", async () => {
+      const functionLabels = await page.$$(`.function-list-item`);
+      await functionLabels[0].click();
+
+      const functionName = await page.$eval(
+        ".function-details-name",
+        (el) => (el as HTMLElement).innerText,
+      );
+      const functionStateMutability = await page.$eval(
+        ".function-details-state-mutability",
+        (el) => (el as HTMLElement).innerText,
+      );
+
+      expect(functionName).toBe("getCount");
+      expect(functionStateMutability).toBe("view");
+    });
+
+    test("getCount() returns 0 in log", async () => {
+      // call the getCount function
+      await page.$eval(".function-submit-btn", (btn) =>
+        (btn as HTMLElement).click(),
+      );
+
+      // wait for log to populate
+      await page.waitForFunction(
+        `document.getElementsByClassName("output-log-item").length === 1`,
+      );
+
+      // inspect the log for an initial count of 0
+      const logText = await page.$eval(
+        ".output-log-item",
+        (el) => (el as HTMLElement).innerText,
+      );
+      expect(logText.slice(-1)).toBe("0");
+    });
   });
 });

@@ -57,12 +57,19 @@ const FunctionInfo = ({ fn }) => {
     <Container label="Function info">
       <Content>
         <DataItem>
-          <b>Name:</b> <Name title={fn.name}>{fn.name}</Name>
+          <b>Name:</b>{" "}
+          <Name className="function-details-name" title={fn.name}>
+            {fn.name}
+          </Name>
         </DataItem>
+
         <DataItem>
           <b>State Mutability:</b>{" "}
-          <FloatRight>{fn?.stateMutability?.toString()}</FloatRight>
+          <FloatRight className="function-details-state-mutability">
+            {fn?.stateMutability?.toString()}
+          </FloatRight>
         </DataItem>
+        
         {fn.inputs?.length > 0 && (
           <>
             <div>

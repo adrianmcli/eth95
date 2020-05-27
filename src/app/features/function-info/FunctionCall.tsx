@@ -156,7 +156,9 @@ const FunctionForm = ({ fn }) => {
           style={{ marginBottom: `1rem` }}
         />
 
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} className="function-submit-btn">
+          Submit
+        </Button>
         <ProxyCallButton
           args={args}
           types={types}
