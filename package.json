@@ -46,6 +46,7 @@
     "@types/ws": "^7.2.4",
     "abi-decoder": "^2.3.0",
     "ethers": "^4.0.47",
+    "ganache-cli": "^6.9.1",
     "get-port": "^5.1.1",
     "husky": "^4.2.5",
     "jest": "^26.0.1",

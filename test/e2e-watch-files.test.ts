@@ -12,7 +12,7 @@ const TEST_DIR = path.resolve("./__test_artifact_dir__");
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-describe("End-to-end test", () => {
+describe("e2e: watch files", () => {
   let serverProcess: ChildProcess;
   let port: number;
   let browser: Browser;
