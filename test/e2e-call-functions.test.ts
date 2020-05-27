@@ -71,6 +71,7 @@ describe("e2e: call functions", () => {
   });
 
   afterAll(async () => {
+    await page.close();
     await browser.close();
     serverProcess.kill("SIGINT");
     ganacheProcess.kill("SIGINT");
