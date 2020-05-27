@@ -26,7 +26,11 @@ describe("e2e: call functions", () => {
     );
     await portUsed.waitUntilUsed(ganachePort, 200, 10000);
 
-    // 2. compile and migrate with truffle
+    // 2. install deps, compile and migrate with truffle
+    execSync(
+      "cd test/projects/truffle && npm install",
+      { stdio: "inherit", env: process.env },
+    );
     execSync(
       "cd test/projects/truffle && truffle migrate --reset --network test",
       { stdio: "inherit", env: process.env },
