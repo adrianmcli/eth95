@@ -30,7 +30,6 @@ const Proxy = ({ show }) => {
 
   return (
     <Container
-      label="Contract address"
       style={{ display: show ? "flex" : "none" }}
     >
       <div>Custom:</div>
@@ -49,7 +48,7 @@ const Proxy = ({ show }) => {
         </div>
         <AddressPanel variant="well">
           {proxyAddress ||
-            "No proxy address, function call will fail"}
+            "No proxy address, proxied calls will fail"}
         </AddressPanel>
       </div>
     </Container>

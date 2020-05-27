@@ -21,7 +21,7 @@ const Options = () => {
         <Tab value={0}>Contract Address</Tab>
         <Tab value={1}>Proxy</Tab>
       </Tabs>
-      <div style={{ flexGrow: 1 }}>
+      <div style={{ flexGrow: 1, height: `calc(100% - 32px)` }}>
         <AddressInfo show={activeTab === 0} />
         <Proxy show={activeTab === 1} />
       </div>

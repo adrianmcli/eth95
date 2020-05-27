@@ -27,12 +27,14 @@ const ByCustomNode = () => {
             value={nodeUrl}
             onChange={(e) => setNodeUrl(e.target.value)}
             placeholder="https://mainnet.infura.io/v3/API_KEY"
+            className="custom-node-url-input"
           />
           <Button
             fullWidth
             onClick={() => connectCustom(nodeUrl)}
             disabled={nodeUrl.trim() === ""}
             style={{ marginTop: "12px" }}
+            className="custom-node-connect"
           >
             Connect
           </Button>

@@ -35,13 +35,16 @@ const ConnectStatus = () => {
     <div style={{ marginTop: "12px" }}>
       <DataRow>
         <DataLabel>Provider:</DataLabel>
-        <DataPoint color={provider ? "green" : "red"}>
+        <DataPoint
+          color={provider ? "green" : "red"}
+          className="status-provider"
+        >
           {provider ? " Connected" : " Not Connected"}
         </DataPoint>
       </DataRow>
       <DataRow>
         <DataLabel>Signer:</DataLabel>
-        <DataPoint color={signer ? "green" : "red"}>
+        <DataPoint color={signer ? "green" : "red"} className="status-signer">
           {signer ? " Connected" : " Not Connected"}
         </DataPoint>
       </DataRow>

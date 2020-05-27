@@ -57,6 +57,17 @@ describe("e2e: call functions", () => {
     await page.goto(`http://localhost:${eth95Port}`, {
       waitUntil: "networkidle2",
     });
+
+    // 5. connect frontend to ganache node
+    await page.select(".connect-options select", "Custom");
+    await page.focus(".custom-node-url-input input");
+    await page.keyboard.type(`http://localhost:${ganachePort}`);
+    await page.$eval(".custom-node-connect", (btn) =>
+      (btn as HTMLElement).click(),
+    );
+    await page.waitForFunction(
+      `document.getElementsByClassName("status-provider")[0].innerText === "Connected"`,
+    );
   });
 
   afterAll(async () => {
@@ -71,9 +82,17 @@ describe("e2e: call functions", () => {
   // 8. submit tx
   // 9. observe log output
 
-  test("smoke test", async () => {
-    const x = await page.select(".connect-options select", "Custom");
-    await page.screenshot({ path: "./test.png" });
-    expect(1).toBe(1);
+  test("check connection to ganache node", async () => {
+    const providerStatus = await page.$eval(
+      `.status-provider`,
+      (el) => el.innerHTML,
+    );
+    const signerStatus = await page.$eval(
+      `.status-signer`,
+      (el) => el.innerHTML,
+    );
+
+    expect(providerStatus.trim()).toBe("Connected");
+    expect(signerStatus.trim()).toBe("Connected");
   });
 });

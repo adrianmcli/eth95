@@ -32,7 +32,6 @@ const AddressInfo = ({ show }) => {
 
   return (
     <Container
-      label="Contract address"
       style={{ display: show ? "flex" : "none" }}
     >
       <div>Custom:</div>
