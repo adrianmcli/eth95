@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import styled from "styled-components";
-import { Fieldset, Button } from "react95";
-import abiDecoder from "abi-decoder";
+import { Fieldset, Button, Checkbox } from "react95";
 
-import ContractAddress from "../../containers/ContractAddress";
-import Contracts from "../../containers/Contracts";
-import Signers from "../../containers/Signers";
 import OutputLog from "../../containers/OutputLog";
-
 import Input from "../common/Input";
 import EncodeButton from "./EncodeButton";
+import useFormData from "./useFormData";
+import useCallFunction from "./useCallFunction";
 
 const Container = styled(Fieldset)`
   flex-grow: 1;
@@ -29,17 +26,40 @@ const Content = styled.div`
   overflow-x: hidden;
 `;
 
+const GasLimitCheckbox = styled(Checkbox)`
+  margin-left: 12px;
+
+  & > div::before {
+    width: 100%;
+    height: 100%;
+  }
+
+  & > div > span::after {
+    width: 4px;
+    height: 9px;
+    border-width: 0 2px 2px 0;
+  }
+`;
+
 const FunctionForm = ({ fn }) => {
   const { addLogItem } = OutputLog.useContainer();
-  const { selectedContract } = Contracts.useContainer();
-  const { address } = ContractAddress.useContainer();
-  const { signer } = Signers.useContainer();
   const [formState, setFormState] = useState({});
-
-  const isPayable = fn?.stateMutability === "payable";
   const [ethToSend, setEthToSend] = useState("");
   const [gasLimit, setGasLimit] = useState("");
+  const [showGasLimit, setShowGasLimit] = useState(false);
 
+  // gather form data and its respective types
+  const { args, types } = useFormData(fn, formState);
+
+  // set options for transaction
+  const opts: any = {};
+  if (ethToSend !== "") opts.value = ethers.utils.parseEther(ethToSend);
+  if (gasLimit !== "" && showGasLimit) opts.gasLimit = parseInt(gasLimit);
+
+  // get the function to call when user hits submit
+  const { callFunction } = useCallFunction(args, types, fn, opts);
+
+  // clear formState when function changes
   useEffect(() => {
     setFormState({});
   }, [fn]);
@@ -53,59 +73,7 @@ const FunctionForm = ({ fn }) => {
   }
 
   const handleInputChange = (idx, value) => {
-    setFormState((prevFormState) => ({
-      ...prevFormState,
-      [idx]: value,
-    }));
-  };
-
-  const opts: any = {};
-  if (ethToSend !== "") opts.value = ethers.utils.parseEther(ethToSend);
-  if (gasLimit !== "") opts.gasLimit = parseInt(gasLimit);
-
-  const callFunction = async () => {
-    let args = [];
-    for (let i = 0; i < fn.inputs.length; i++) {
-      args.push(formState[i]);
-    }
-
-    // handle array types
-    const processedArgs = args.map((arg, idx) => {
-      const type = types[idx];
-      if (type.substring(0, 4) === "uint") return parseInt(arg);
-      if (type.slice(-2) === "[]") return JSON.parse(arg);
-      return arg;
-    });
-
-    const instance = new ethers.Contract(address, selectedContract.abi, signer);
-
-    if (fn.stateMutability !== "view") {
-      // mutating fn; just return hash
-      console.log(args);
-      console.log(processedArgs);
-      const tx = await instance[fn.name](...processedArgs, opts);
-      addLogItem(`tx.hash: ${tx.hash}`);
-      await tx.wait();
-      addLogItem(`tx mined: ${tx.hash}`);
-
-      // log out any events from tx
-      const receipt = await signer.provider.getTransactionReceipt(tx.hash);
-      abiDecoder.addABI(selectedContract.abi);
-      const decoded = abiDecoder.decodeLogs(receipt.logs);
-      decoded.forEach((evt) => {
-        const values = evt.events.map((x) => {
-          if (x.type === "bytes32") {
-            return ethers.utils.parseBytes32String(x.value);
-          }
-          return x.value;
-        });
-        addLogItem(`Event: ${evt.name}(${values})`);
-      });
-    } else {
-      // view fn; return value (and call toString on it)
-      const result = await instance[fn.name](...processedArgs);
-      addLogItem(result.toString());
-    }
+    setFormState((prev) => ({ ...prev, [idx]: value }));
   };
 
   const handleSubmit = async () => {
@@ -116,13 +84,6 @@ const FunctionForm = ({ fn }) => {
       addLogItem(`Error: ${error.message}`);
     }
   };
-
-  // grab args and types for proxy call and encode
-  let args = [];
-  for (let i = 0; i < fn.inputs.length; i++) {
-    args.push(formState[i]);
-  }
-  const types = fn.inputs.map((x) => x.type);
 
   return (
     <Container label="Call function">
@@ -138,7 +99,7 @@ const FunctionForm = ({ fn }) => {
             />
           </div>
         ))}
-        {isPayable && (
+        {fn.stateMutability === "payable" && (
           <>
             <div>ETH to send:</div>
             <Input
@@ -151,24 +112,35 @@ const FunctionForm = ({ fn }) => {
           </>
         )}
 
-        <div>Gas limit:</div>
-        <Input
-          type="number"
-          placeholder="leave blank to use default"
-          value={gasLimit}
-          onChange={(e) => setGasLimit(e.target.value)}
-          style={{ marginBottom: `1rem` }}
-        />
+        <div style={{ display: "flex" }}>
+          <Button onClick={handleSubmit} className="function-submit-btn">
+            Submit
+          </Button>
+          <EncodeButton
+            args={args}
+            types={types}
+            inputs={fn.inputs}
+            opts={opts}
+          />
+          <GasLimitCheckbox
+            label="custom gas limit"
+            checked={showGasLimit}
+            onChange={() => setShowGasLimit((p) => !p)}
+          />
+        </div>
 
-        <Button onClick={handleSubmit} className="function-submit-btn">
-          Submit
-        </Button>
-        <EncodeButton
-          args={args}
-          types={types}
-          inputs={fn.inputs}
-          opts={opts}
-        />
+        {showGasLimit && (
+          <>
+            <div style={{ marginTop: `1rem` }}>Gas limit:</div>
+            <Input
+              type="number"
+              placeholder="leave blank to use default"
+              value={gasLimit}
+              onChange={(e) => setGasLimit(e.target.value)}
+              style={{ marginBottom: `1rem` }}
+            />
+          </>
+        )}
       </Content>
     </Container>
   );
