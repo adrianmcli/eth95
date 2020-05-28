@@ -6,7 +6,7 @@ import { ModalContainer, ModalHeader, ModalContent } from "../common/Modal";
 import ByAbi from "./ByAbi";
 import ByArtifact from "./ByArtifact";
 import ByEtherscan from "./ByEtherscan";
-import ByPremade from "./ByPremade";
+// import ByPremade from "./ByPremade";
 
 const AddContractBtn = ({ closeModal }) => {
   const [activeTab, setActiveTab] = useState(1);

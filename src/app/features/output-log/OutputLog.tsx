@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Fieldset, Button } from "react95";
 import OutputLogContainer from "../../containers/OutputLog";
 
-// const containerWidth = 450;
 const Container = styled(Fieldset)`
   display: flex;
   flex-grow: 1;

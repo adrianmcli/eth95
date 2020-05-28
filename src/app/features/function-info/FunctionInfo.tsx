@@ -18,6 +18,7 @@ const FunctionInfo = ({ contract }) => {
   const { shiftUp, shiftDown } = Contracts.useContainer();
   const [selectedIdx, setSelectedIdx] = useState(null);
 
+  // grab only functions from ABI and sort alphabetically
   let fns, selectedFn;
   if (contract) {
     fns = contract.abi
@@ -51,6 +52,7 @@ const FunctionInfo = ({ contract }) => {
     }
   });
 
+  // unselect functions if the contract changes
   useEffect(() => {
     setSelectedIdx(null);
   }, [contract]);

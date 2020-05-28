@@ -32,29 +32,11 @@ const VendorCutout = styled(Cutout)`
   }
 `;
 
-const ContractsCutout = styled(Cutout)`
-  flex-grow: 1;
-  text-align: left;
-  background: white;
-  overflow: hidden;
-
-  &:before {
-    z-index: unset;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
 const Content = styled.div`
   overflow-y: auto;
   overflow-x: inherit;
   width: 100%;
   height: 240px;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 const ByPremade = ({ closeModal }) => {
