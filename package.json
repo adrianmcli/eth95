@@ -1,15 +1,16 @@
 {
   "name": "eth95",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "bin": {
     "eth95": "./dist/index.js"
   },
+  "files": ["/dist"],
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "rm -rf dist && yarn tsc && yarn bundle",
     "tsc": "tsc -p . && tsc -p ./src/app",
-    "bundle": "parcel build src/app/index.html -d dist/app",
+    "bundle": "parcel build src/app/index.html -d dist/app --no-source-maps",
     "test": "jest",
     "test:ci": "jest --runInBand",
     "prepublish": "yarn build"
