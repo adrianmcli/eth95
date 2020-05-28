@@ -11,7 +11,8 @@
     "tsc": "tsc -p . && tsc -p ./src/app",
     "bundle": "parcel build src/app/index.html -d dist/app",
     "test": "jest",
-    "test:ci": "jest --runInBand"
+    "test:ci": "jest --runInBand",
+    "prepublish": "yarn build"
   },
   "husky": {
     "hooks": {
