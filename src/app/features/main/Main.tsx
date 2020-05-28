@@ -5,7 +5,7 @@ import { Fieldset, Panel } from "react95";
 import Contracts from "../../containers/Contracts";
 import FunctionInfo from "../function-info/FunctionInfo";
 import OutputLog from "../output-log/OutputLog";
-import Options from "../options/Options";
+import AddressInfo from "../address-info/AddressInfo";
 
 const Container = styled.div`
   flex-grow: 1;
@@ -44,7 +44,7 @@ const Main = () => {
       <ContentFrame label={contract && contract.name}>
         <Content>
           <TopContainer>
-            <Options />
+            <AddressInfo />
             <OutputLog />
           </TopContainer>
           <FunctionInfo contract={contract} />

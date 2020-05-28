@@ -10,7 +10,7 @@ import Signers from "../../containers/Signers";
 import OutputLog from "../../containers/OutputLog";
 
 import Input from "../common/Input";
-import ProxyCallButton from "./ProxyCallButton";
+import EncodeButton from "./EncodeButton";
 
 const Container = styled(Fieldset)`
   flex-grow: 1;
@@ -163,7 +163,7 @@ const FunctionForm = ({ fn }) => {
         <Button onClick={handleSubmit} className="function-submit-btn">
           Submit
         </Button>
-        <ProxyCallButton
+        <EncodeButton
           args={args}
           types={types}
           inputs={fn.inputs}

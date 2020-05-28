@@ -15,7 +15,7 @@ const DataPanel = styled(Panel)`
   overflow-y: auto;
 `;
 
-const ProxyCallModal = ({ closeModal, args, types, inputs, opts }) => {
+const EncodeModal = ({ closeModal, args, types, inputs, opts }) => {
   const [encoded, setEncoded] = useState("");
   const [hasError, setHasError] = useState(false);
 
@@ -69,4 +69,4 @@ const ProxyCallModal = ({ closeModal, args, types, inputs, opts }) => {
   );
 };
 
-export default ProxyCallModal;
+export default EncodeModal;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { Button } from "react95";
 
-import ProxyCallModal from "./ProxyCallModal";
+import EncodeModal from "./EncodeModal";
 
 const customStyles = {
   overlay: {
@@ -27,7 +27,7 @@ const customStyles = {
   },
 };
 
-const ProxyCallButton = ({ args, types, inputs, opts }) => {
+const EncodeButton = ({ args, types, inputs, opts }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -42,7 +42,7 @@ const ProxyCallButton = ({ args, types, inputs, opts }) => {
         style={customStyles}
         shouldCloseOnOverlayClick
       >
-        <ProxyCallModal
+        <EncodeModal
           closeModal={closeModal}
           args={args}
           types={types}
@@ -54,4 +54,4 @@ const ProxyCallButton = ({ args, types, inputs, opts }) => {
   );
 };
 
-export default ProxyCallButton;
+export default EncodeButton;

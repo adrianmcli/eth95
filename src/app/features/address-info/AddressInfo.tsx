@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { TabBody, Panel, Divider } from "react95";
-import Input from "../common/Input";
+import { Panel, Fieldset, Divider } from "react95";
+
 import Network from "../../containers/Network";
 import ContractAddress from "../../containers/ContractAddress";
+import Input from "../common/Input";
 
-const Container = styled(TabBody)`
+const containerWidth = 475;
+const Container = styled(Fieldset)`
+  display: flex;
+  width: ${containerWidth}px;
+  min-width: ${containerWidth}px;
   display: flex;
   flex-direction: column;
 `;
@@ -21,7 +26,7 @@ const AddressPanel = styled(Panel)`
   // margin-top: 1rem;
 `;
 
-const AddressInfo = ({ show }) => {
+const AddressInfo = () => {
   const [inputText, setInputText] = useState("");
   const { network } = Network.useContainer();
   const {
@@ -29,11 +34,8 @@ const AddressInfo = ({ show }) => {
     setCustomAddress,
     address,
   } = ContractAddress.useContainer();
-
   return (
-    <Container
-      style={{ display: show ? "flex" : "none" }}
-    >
+    <Container label="AddressInfo">
       <div>Custom:</div>
       <Input
         placeholder="Paste the deployed contract address here..."
