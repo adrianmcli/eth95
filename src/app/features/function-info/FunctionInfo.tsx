@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useEvent } from "react-use";
 
 import FunctionDetails from "./FunctionDetails";
-import FunctionCall from "./FunctionCall";
 import FunctionList from "./FunctionList";
+import FunctionCall from "../function-call/FunctionCall";
 import Contracts from "../../containers/Contracts";
 
 const Container = styled.div`
