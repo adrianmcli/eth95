@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Button, TabBody as rTabBody, TextField, Fieldset } from "react95";
+import { Button, TabBody as rTabBody, Fieldset } from "react95";
 
 import Select from "../common/Select";
+import Input from "../common/Input";
 
 import Contracts from "../../containers/Contracts";
 import Etherscan, {
@@ -67,7 +68,7 @@ const ByEtherscan = ({ closeModal }) => {
           >
             <p>The address of the verified address on etherscan.</p>
             <br />
-            <TextField
+            <Input
               placeholder="0x6b175474e89094c44da98b954eedeac495271d0f"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -83,7 +84,7 @@ const ByEtherscan = ({ closeModal }) => {
               address if left empty.
             </p>
             <br />
-            <TextField
+            <Input
               placeholder="MyDapp"
               value={name}
               onChange={(e) => setName(e.target.value)}
