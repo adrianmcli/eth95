@@ -1,3 +1,4 @@
+import queryString from "query-string";
 import React from "react";
 import styled from "styled-components";
 import { Fieldset, Panel } from "react95";
@@ -39,6 +40,8 @@ const FooterPanel = styled(Panel)`
 
 const Main = () => {
   const { selectedContract: contract } = Contracts.useContainer();
+
+  
   return (
     <Container>
       <ContentFrame label={contract && contract.name}>
