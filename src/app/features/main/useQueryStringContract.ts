@@ -21,7 +21,7 @@ const useQueryStringContract = () => {
   useEffect(() => {
     if (queryObj.address) {
       if (queryObj.network) {
-        const network = getNetworkName(queryObj.network);
+        const network = getNetworkName(parseInt(queryObj.network));
         setNetwork(network || Network.Mainnet);
       }
       setAddress(queryObj.address);
