@@ -11,6 +11,7 @@ import Layout from "./features/common/Layout";
 import Sidebar from "./features/sidebar/Sidebar";
 import Main from "./features/main/Main";
 import Network from "./containers/Network";
+import EtherscanABI from "./containers/Etherscan";
 import ContractAddress from "./containers/ContractAddress";
 import OutputLog from "./containers/OutputLog";
 
@@ -20,20 +21,22 @@ const App = () => (
   <OutputLog.Provider>
     <Contracts.Provider>
       <Websockets.Provider>
-        <Connection.Provider>
-          <Signers.Provider>
-            <Network.Provider>
-              <Address.Provider>
-                <ContractAddress.Provider>
-                  <Layout>
-                    <Sidebar />
-                    <Main />
-                  </Layout>
-                </ContractAddress.Provider>
-              </Address.Provider>
-            </Network.Provider>
-          </Signers.Provider>
-        </Connection.Provider>
+        <EtherscanABI.Provider>
+          <Connection.Provider>
+            <Signers.Provider>
+              <Network.Provider>
+                <Address.Provider>
+                  <ContractAddress.Provider>
+                    <Layout>
+                      <Sidebar />
+                      <Main />
+                    </Layout>
+                  </ContractAddress.Provider>
+                </Address.Provider>
+              </Network.Provider>
+            </Signers.Provider>
+          </Connection.Provider>
+        </EtherscanABI.Provider>
       </Websockets.Provider>
     </Contracts.Provider>
   </OutputLog.Provider>

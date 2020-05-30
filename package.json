@@ -4,7 +4,9 @@
   "bin": {
     "eth95": "./dist/index.js"
   },
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/index.ts",
@@ -29,6 +31,7 @@
     "express": "^4.17.1",
     "figlet": "^1.4.0",
     "parcel-bundler": "^1.12.4",
+    "query-string": "^6.12.1",
     "ws": "^7.3.0"
   },
   "devDependencies": {
