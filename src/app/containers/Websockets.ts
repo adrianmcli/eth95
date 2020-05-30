@@ -31,7 +31,10 @@ function useWebsockets() {
   };
 
   useEffect(() => {
-    setup();
+    const { hostname } = window.location;
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      setup();
+    }
   }, []);
   return { socket };
 }

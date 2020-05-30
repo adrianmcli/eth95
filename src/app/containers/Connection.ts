@@ -16,7 +16,11 @@ export const options = [
 ];
 
 export function useConnection() {
-  const [connection, setConnection] = useState(Method.Localhost);
+  const { hostname } = window.location;
+  const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
+  const defaultOption = isLocal ? Method.Localhost : Method.MetaMask;
+
+  const [connection, setConnection] = useState(defaultOption);
   const [provider, setProvider] = useState<
     JsonRpcProvider | Web3Provider | null
   >(null);
