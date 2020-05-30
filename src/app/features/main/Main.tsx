@@ -1,4 +1,3 @@
-import queryString from "query-string";
 import React from "react";
 import styled from "styled-components";
 import { Fieldset, Panel } from "react95";
@@ -7,6 +6,7 @@ import Contracts from "../../containers/Contracts";
 import FunctionInfo from "../function-info/FunctionInfo";
 import OutputLog from "../output-log/OutputLog";
 import AddressInfo from "../address-info/AddressInfo";
+import useQueryStringContract from "./useQueryStringContract";
 
 const Container = styled.div`
   flex-grow: 1;
@@ -40,8 +40,8 @@ const FooterPanel = styled(Panel)`
 
 const Main = () => {
   const { selectedContract: contract } = Contracts.useContainer();
+  useQueryStringContract()
 
-  
   return (
     <Container>
       <ContentFrame label={contract && contract.name}>

@@ -18,10 +18,10 @@ import OutputLog from "./containers/OutputLog";
 Modal.setAppElement("#root");
 
 const App = () => (
-  <OutputLog.Provider>
-    <Contracts.Provider>
-      <Websockets.Provider>
-        <EtherscanABI.Provider>
+  <EtherscanABI.Provider>
+    <OutputLog.Provider>
+      <Contracts.Provider>
+        <Websockets.Provider>
           <Connection.Provider>
             <Signers.Provider>
               <Network.Provider>
@@ -36,10 +36,10 @@ const App = () => (
               </Network.Provider>
             </Signers.Provider>
           </Connection.Provider>
-        </EtherscanABI.Provider>
-      </Websockets.Provider>
-    </Contracts.Provider>
-  </OutputLog.Provider>
+        </Websockets.Provider>
+      </Contracts.Provider>
+    </OutputLog.Provider>
+  </EtherscanABI.Provider>
 );
 
 export default App;
