@@ -45,7 +45,8 @@ const useQueryStringContract = () => {
   }, [abi, name, address, successRetrieveABI, network]);
 
   useEffect(() => {
-    if (contracts.length > 0) {
+    const queryObj = queryString.parse(window.location.search);
+    if (queryObj.address && contracts.length > 0) {
       setSelectedIdx(0);
     }
   }, [contracts]);
