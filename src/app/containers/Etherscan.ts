@@ -17,6 +17,31 @@ export const networkOptions = [
   { value: Network.Goerli, label: Network.Goerli },
 ];
 
+export function getChainId(network: Network): number {
+  if (network === Network.Mainnet) {
+    return 1;
+  }
+
+  if (network === Network.Ropsten) {
+    return 3;
+  }
+
+  if (network === Network.Rinkeby) {
+    return 4;
+  }
+
+  if (network === Network.Goerli) {
+    return 5;
+  }
+
+  if (network === Network.Kovan) {
+    return 42;
+  }
+
+  // Localhost
+  return 1337;
+}
+
 function getSourceCodeEnpoint(network: Network, address: string): string {
   // Ethers JS default API key
   const apiKey = "8FG3JMZ9USS4NTA6YKEKHINU56SEPPVBJR";

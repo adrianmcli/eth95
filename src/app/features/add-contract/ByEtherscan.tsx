@@ -5,7 +5,10 @@ import { Button, TabBody as rTabBody, TextField, Fieldset } from "react95";
 import Select from "../common/Select";
 
 import Contracts from "../../containers/Contracts";
-import Etherscan, { networkOptions } from "../../containers/Etherscan";
+import Etherscan, {
+  getChainId,
+  networkOptions,
+} from "../../containers/Etherscan";
 
 const TabBody = styled(rTabBody)`
   width: 100%;
@@ -18,7 +21,7 @@ const ButtonContainer = styled.div`
 `;
 
 const ByEtherscan = ({ closeModal }) => {
-  const { addByAbi } = Contracts.useContainer();
+  const { addContract } = Contracts.useContainer();
   const {
     abi,
     name,
@@ -100,7 +103,17 @@ const ByEtherscan = ({ closeModal }) => {
             fullWidth
             size="lg"
             style={{ marginTop: "1rem" }}
-            onClick={() => addByAbi(abi, name)}
+            onClick={() =>
+              addContract({
+                name,
+                abi,
+                artifact: {
+                  networks: {
+                    [getChainId(network)]: { address },
+                  },
+                },
+              })
+            }
             disabled={retrievingABI || !successRetrieveABI || name.length === 0}
           >
             {retrievingABI
