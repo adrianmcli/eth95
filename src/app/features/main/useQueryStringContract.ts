@@ -5,7 +5,7 @@ import Contracts from "../../containers/Contracts";
 import Etherscan, { Network, getNetworkName } from "../../containers/Etherscan";
 
 const useQueryStringContract = () => {
-  const { addContract } = Contracts.useContainer();
+  const { addContract, contracts, setSelectedIdx } = Contracts.useContainer();
   const {
     setAddress,
     successRetrieveABI,
@@ -43,6 +43,12 @@ const useQueryStringContract = () => {
       });
     }
   }, [abi, name, address, successRetrieveABI, network]);
+
+  useEffect(() => {
+    if (contracts.length > 0) {
+      setSelectedIdx(0);
+    }
+  }, [contracts]);
   return {};
 };
 
