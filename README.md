@@ -17,6 +17,14 @@
 
 _**Instant retro UI for calling any contract function you want**_
 
+See it online @ [eth95.dev](https://eth95.dev/) here's an example with DAI:
+
+```
+https://eth95.dev/?network=1&address=0x6b175474e89094c44da98b954eedeac495271d0f
+```
+
+[Direct Link](https://eth95.dev/?network=1&address=0x6b175474e89094c44da98b954eedeac495271d0f)
+
 ## Features
 
 - 🤙 Call any contract function as long as you have the ABI
