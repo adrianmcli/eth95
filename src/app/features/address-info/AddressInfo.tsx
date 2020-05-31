@@ -35,7 +35,7 @@ const AddressInfo = () => {
     address,
   } = ContractAddress.useContainer();
   return (
-    <Container label="AddressInfo">
+    <Container label="Contract Address">
       <div>Custom:</div>
       <Input
         placeholder="Paste the deployed contract address here..."
