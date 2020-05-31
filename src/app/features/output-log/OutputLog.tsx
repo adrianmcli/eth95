@@ -10,7 +10,7 @@ const Container = styled(Fieldset)`
   margin-left: 16px;
 `;
 
-const Content = styled.div`
+const Content = styled.pre`
   position: absolute;
   top: 16px;
   left: 12px;
@@ -27,6 +27,11 @@ const Content = styled.div`
 
 const LogItem = styled.div`
   overflow-wrap: anywhere;
+  white-space: normal;
+`;
+
+const LogItemJSON = styled.code`
+  overflow-wrap: anywhere;
 `;
 
 const ClearButton = styled(Button)`
@@ -40,11 +45,23 @@ const OutputLog = () => {
   return (
     <Container label="Log">
       <Content className="output-log">
-        {logItems.map((logItem, i) => (
-          <LogItem key={i} className="output-log-item">
-            {logItem}
-          </LogItem>
-        ))}
+        {logItems.map((logItem, i) => {
+          if (logItem.type === "normal") {
+            return (
+              <LogItem key={i} className="output-log-item">
+                {logItem.message}
+              </LogItem>
+            );
+          }
+
+          if (logItem.type === "JSON") {
+            return (
+              <LogItemJSON key={i} className="output-log-item">
+                {logItem.message}
+              </LogItemJSON>
+            );
+          }
+        })}
       </Content>
       <ClearButton onClick={clear}>Clear</ClearButton>
     </Container>
