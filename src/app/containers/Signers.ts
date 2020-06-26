@@ -1,15 +1,15 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
-import { ethers, Signer } from "ethers";
+import { ethers, Signer, Wallet } from "ethers";
 import Connection from "./Connection";
 
 const useSigners = () => {
   const { provider } = Connection.useContainer();
   const [internalSigner, setInternalSigner] = useState<Signer | null>(null);
-  const [customSigner, setCustomSigner] = useState<Signer | null>(null);
+  const [customSigner, setCustomSigner] = useState<Wallet | null>(null);
 
   const attemptSetCustomSigner = (customSignerString: string) => {
-    let mySigner;
+    let mySigner: Wallet;
     try {
       if (customSignerString.trim() !== "") {
         if (customSignerString.substring(0, 2) === "0x") {
@@ -19,6 +19,7 @@ const useSigners = () => {
           // mnemonic
           mySigner = ethers.Wallet.fromMnemonic(customSignerString.trim());
         }
+        mySigner = mySigner.connect(provider);
         setCustomSigner(mySigner);
       }
     } catch (error) {
