@@ -43,14 +43,16 @@ const Main = () => {
   const { selectedContract: contract, overwriteContract } =
     Contracts.useContainer();
   useQueryStringContract();
-  if (localStorage.getItem("contracts")) {
-    useEffect(() => {
-      let result = localStorage.getItem("contracts");
-      result = `{"data":${result}}`;
-      let jsonResult = JSON.parse(result).data;
-      overwriteContract(jsonResult);
-    }, [contract]);
-  }
+
+  useEffect(() => {
+    const contracts = localStorage.getItem("contracts");
+    if (!contracts) {
+      return;
+    }
+    const result = `{"data":${contracts}}`;
+    let jsonResult = JSON.parse(result).data;
+    overwriteContract(jsonResult);
+  }, []);
 
   return (
     <Container>
