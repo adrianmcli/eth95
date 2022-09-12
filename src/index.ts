@@ -4,7 +4,7 @@ import path from "path";
 import chalk from "chalk";
 import clear from "clear";
 import figlet from "figlet";
-import program from "commander";
+import { program } from "commander";
 
 import log from "./logger";
 import startServer from "./server";
@@ -31,15 +31,16 @@ program
   .parse(process.argv);
 
 program.outputHelp();
+const options = program.opts();
 console.log("");
 
 // determine what path (if any) to try
 let targetPath;
 if (program.args[0]) {
   targetPath = program.args[0];
-} else if (program.truffle) {
+} else if (options.truffle) {
   targetPath = "./build/contracts";
-} else if (program.buidler) {
+} else if (options.buidler) {
   targetPath = "./artifacts";
 }
 
@@ -55,11 +56,11 @@ if (targetPath) {
 
   log.info(`Artifact directory: ${chalk.yellow(artifactPath)}`);
   startServer({
-    port: program.port || 3000,
+    port: options.port || 3000,
     artifactPath,
   });
 } else {
   startServer({
-    port: program.port || 3000,
+    port: options.port || 3000,
   });
 }
