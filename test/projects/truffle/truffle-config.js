@@ -9,7 +9,7 @@ module.exports = {
     test: {
       host: "localhost",
       port: process.env.E2E_GANACHE_PORT,
-      network_id: "*",
+      network_id: "1337",
       skipDryRun: true,
     },
   },
