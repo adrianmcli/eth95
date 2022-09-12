@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { themes, Window, WindowHeader, WindowContent } from "react95";
+import { Window, WindowHeader, WindowContent } from "react95";
+import original from "react95/dist/themes/original"
 
 const AppContainer = styled.div`
   width: 100%;
@@ -20,13 +21,9 @@ const Content = styled(WindowContent)`
   overflow: auto;
 `;
 
-const appTheme = {
-  ...themes.default,
-};
-
 const Layout = ({ children }) => (
   <>
-    <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={original}>
       <AppContainer>
         <Container shadow={false}>
           <WindowHeader>Eth95.exe</WindowHeader>
