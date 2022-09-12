@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useEvent } from "react-use";
 
 import FunctionDetails from "./FunctionDetails";
 import FunctionList from "./FunctionList";
@@ -31,7 +30,7 @@ const FunctionInfo = ({ contract }) => {
   }
 
   // keyboard press behaviour (should really be somewhere else)
-  useEvent("keydown", (e) => {
+  const keyHandler = e => {
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (selectedIdx !== null) {
@@ -50,7 +49,15 @@ const FunctionInfo = ({ contract }) => {
         shiftDown();
       }
     }
-  });
+  }
+
+  // add event listener on initial render, and remove on cleanup
+  useEffect(() => {
+    window.addEventListener('keydown', keyHandler)
+    return () => {
+      window.removeEventListener('keydown', keyHandler)
+    }
+  }, [])
 
   // unselect functions if the contract changes
   useEffect(() => {
