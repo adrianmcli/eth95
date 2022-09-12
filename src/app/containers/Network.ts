@@ -1,7 +1,7 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
 import Connection from "./Connection";
-import { Network } from "ethers/utils";
+import { Network } from "@ethersproject/networks";
 
 export function useNetwork() {
   const { provider } = Connection.useContainer();
