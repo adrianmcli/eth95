@@ -88,7 +88,8 @@ const startServer = async ({ port, paths = [], artifactPath }: IServer) => {
   wss.on("connection", function (ws) {
     sender = ws;
     ws.on("message", function (message) {
-      const msg = JSON.parse(message as string);
+      if (message === undefined) return;
+      const msg = JSON.parse(message.toString());
       if (msg.type === "CONNECTION_OPENED" && artifactPath) {
         // load initial state (i.e. send all valid files over)
         const jsonFilePaths = getJsonFilePaths(artifactPath);
