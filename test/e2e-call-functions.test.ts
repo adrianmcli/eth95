@@ -20,8 +20,8 @@ describe("e2e: call functions", () => {
     ganachePort = await getPort();
     process.env.E2E_GANACHE_PORT = ganachePort.toString();
     ganacheProcess = spawn(
-      "ganache-cli",
-      ["-d", "-p", ganachePort.toString()],
+      "ganache",
+      ["-d", "-i 1337", "-p", ganachePort.toString()],
       { stdio: "inherit" },
     );
     await portUsed.waitUntilUsed(ganachePort, 200, 10000);

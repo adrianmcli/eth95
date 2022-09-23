@@ -9,13 +9,13 @@ module.exports = {
     test: {
       host: "localhost",
       port: process.env.E2E_GANACHE_PORT,
-      network_id: "*",
+      network_id: "1337",
       skipDryRun: true,
     },
   },
   compilers: {
     solc: {
-      version: "^0.6.8",
+      version: "0.8.14",
     },
   },
 };

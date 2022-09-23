@@ -19,7 +19,7 @@ const useCallFunction = (args, types, fn, opts) => {
     decoded.forEach((evt) => {
       const values = evt.events.map((x) => {
         if (x.type === "bytes32") {
-          return ethers.utils.parseBytes32String(x.value);
+          ethers.BigNumber.from(x.value).toString();
         }
         return x.value;
       });
@@ -31,7 +31,7 @@ const useCallFunction = (args, types, fn, opts) => {
     // handle array and int types
     const processedArgs = args.map((arg, idx) => {
       const type = types[idx];
-      if (type.substring(0, 4) === "uint") return ethers.utils.bigNumberify(arg);
+      if (type.substring(0, 4) === "uint") return ethers.BigNumber.from(arg);
       if (type.slice(-2) === "[]") return JSON.parse(arg);
       return arg;
     });

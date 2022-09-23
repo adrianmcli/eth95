@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "ganache-cli": "^6.9.1",
-    "truffle": "^5.1.26"
+    "ganache": "^7.4.1",
+    "truffle": "^5.5.28"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^3.0.1"
+    "@openzeppelin/contracts": "^4.7.3"
   }
 }
