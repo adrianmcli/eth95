@@ -7,6 +7,7 @@ export enum Network {
   Ropsten = "Ropsten",
   Kovan = "Kovan",
   Goerli = "Goerli",
+  Sepolia = "Sepolia",
 }
 
 export const networkOptions = [
@@ -15,6 +16,7 @@ export const networkOptions = [
   { value: Network.Ropsten, label: Network.Ropsten },
   { value: Network.Kovan, label: Network.Kovan },
   { value: Network.Goerli, label: Network.Goerli },
+  { value: Network.Sepolia, label: Network.Sepolia },
 ];
 
 const networkIdToName = {
@@ -23,6 +25,7 @@ const networkIdToName = {
   4: Network.Rinkeby,
   5: Network.Goerli,
   42: Network.Kovan,
+  11155111: Network.Sepolia,
 };
 
 const networkNameToId = {
@@ -31,6 +34,7 @@ const networkNameToId = {
   [Network.Rinkeby]: 4,
   [Network.Goerli]: 5,
   [Network.Kovan]: 42,
+  [Network.Sepolia]: 11155111,
 };
 
 export function getChainId(network: Network): number {
