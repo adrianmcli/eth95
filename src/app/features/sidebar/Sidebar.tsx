@@ -6,6 +6,7 @@ import AddContractBtn from "../add-contract/AddContractBtn";
 import Contracts from "../../containers/Contracts";
 import ContractItem from "./ContractItem";
 import ConnectOptions from "../connection/ConnectOptions";
+import ContractManagementButtons from "./ContractManagementButtons";
 
 const Container = styled.div`
   width: 300px;
@@ -41,13 +42,22 @@ const FilesContainer = styled.div`
   height: 100%;
 `;
 
+const ContractsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
+
 const Sidebar = () => {
   const { contracts } = Contracts.useContainer();
   return (
     <Container>
       <ConnectOptions />
       <ContractsSection>
-        <div>Contracts:</div>
+        <ContractsHeader>
+          <div>Contracts:</div>
+          <ContractManagementButtons />
+        </ContractsHeader>
         <FilesCutout shadow={false}>
           <FilesContainer className="contract-list">
             {contracts.map((c, i) => (

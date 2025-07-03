@@ -25,14 +25,13 @@ export function useContracts() {
   };
 
   const addContract = (contract: Contract) => {
-    var newContracts;
     setContracts((prevContracts) => {
-      newContracts = [...prevContracts, contract].sort((a, b) =>
+      const newContracts = [...prevContracts, contract].sort((a, b) =>
         a.name.localeCompare(b.name)
       );
+      localStorage.setItem("contracts", JSON.stringify(newContracts));
       return newContracts;
     });
-    localStorage.setItem("contracts", JSON.stringify(newContracts));
   };
 
   const overwriteContract = (contracts: Contract[]) => {
@@ -102,6 +101,17 @@ export function useContracts() {
     );
   };
 
+  const deleteContract = (idx: number) => {
+    setSelectedIdx(null);
+    setContracts((prevContracts) => {
+      const newContracts = prevContracts.filter((_, i) => i !== idx);
+      localStorage.setItem("contracts", JSON.stringify(newContracts));
+      return newContracts;
+    });
+  };
+
+
+
   return {
     contracts,
     addContract,
@@ -111,6 +121,7 @@ export function useContracts() {
     overwriteContract,
     upsertByPath,
     removeByPath,
+    deleteContract,
     selectedIdx,
     selectedContract,
     setSelectedIdx,
